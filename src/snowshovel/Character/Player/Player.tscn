@@ -27,10 +27,11 @@ mesh = SubResource("SphereMesh_h70nc")
 shape = SubResource("CapsuleShape3D_valxt")
 
 [node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("target")]
-transform = Transform3D(0.984628, 3.66803e-09, 0.174662, -0.0558892, 0.947423, 0.315066, -0.165479, -0.319985, 0.932859, 0, 10, 10)
+transform = Transform3D(0.984628, 1.38602e-10, 0.174662, -0.0558892, 0.947423, 0.315066, -0.165479, -0.319985, 0.932859, 0, 5, 10)
 top_level = true
 projection = 1
 current = true
-size = 12.306
+size = 13.0
+far = 500.0
 script = ExtResource("3_t0d3t")
 target = NodePath("..")

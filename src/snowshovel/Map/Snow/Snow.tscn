@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://cv4bbk5ufwims"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jkwfe"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tkhou"]
+transparency = 1
+albedo_color = Color(1, 0.466667, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_w2jxr"]
+
+[node name="Snow" type="Area3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_jkwfe")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_tkhou")
+mesh = SubResource("BoxMesh_w2jxr")

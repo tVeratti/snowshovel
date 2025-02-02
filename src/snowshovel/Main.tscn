@@ -1,7 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://sg4leuqvlxcb"]
+[gd_scene load_steps=8 format=3 uid="uid://sg4leuqvlxcb"]
 
 [ext_resource type="Texture2D" uid="uid://c51rittgomagk" path="res://Map/Assets/texture_08.png" id="1_ig0fh"]
 [ext_resource type="PackedScene" uid="uid://o7p2surfsx0u" path="res://Character/Player/Player.tscn" id="1_x2dak"]
+[ext_resource type="PackedScene" uid="uid://cv4bbk5ufwims" path="res://Map/Snow/Snow.tscn" id="3_xksd4"]
+[ext_resource type="PackedScene" uid="uid://c6a8b656pbcxm" path="res://Map/Snow/AntiSnow.tscn" id="4_qkrrd"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_e7kpl"]
 size = Vector2(100, 100)
@@ -16,7 +18,7 @@ data = PackedVector3Array(50, -50, 0, -50, -50, 0, 50, 50, 0, -50, -50, 0, -50, 
 [node name="Main" type="Node3D"]
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -0.00331608, 0.999995, 0, -0.999995, -0.00331608, 0, 0, 0)
+transform = Transform3D(0.707107, -0.707107, -3.09086e-08, 0, -4.37114e-08, 1, -0.707107, -0.707107, -3.09086e-08, 0, 0, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
 mesh = SubResource("QuadMesh_e7kpl")
@@ -30,4 +32,11 @@ shape = SubResource("ConcavePolygonShape3D_6s2uj")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.02458, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.389253, 0.921131, 0, -0.921131, 0.389253, 0, 10.6738, 0)
+transform = Transform3D(1, 0, 0, 0, 0.771203, 0.63659, 0, -0.63659, 0.771203, 0, 10.6738, 5.97322)
+shadow_enabled = true
+
+[node name="Snow" parent="." instance=ExtResource("3_xksd4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.6594, 1.7805, 4.17788)
+
+[node name="AntiSnow" parent="." instance=ExtResource("4_qkrrd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.4414, 2.44973, 4.34706)
