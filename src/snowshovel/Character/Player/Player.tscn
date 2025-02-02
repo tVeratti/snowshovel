@@ -1,7 +1,7 @@
-[gd_scene load_steps=9 format=4 uid="uid://o7p2surfsx0u"]
+[gd_scene load_steps=12 format=4 uid="uid://o7p2surfsx0u"]
 
 [ext_resource type="Script" path="res://Character/Player/Player.gd" id="1_4soc0"]
-[ext_resource type="Script" path="res://Character/PlayerController.gd" id="2_uw8rb"]
+[ext_resource type="Script" path="res://Character/Player/PlayerController.gd" id="2_uw8rb"]
 [ext_resource type="Script" path="res://Character/Player/PlayerCamera.gd" id="3_t0d3t"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_4kxwh"]
@@ -26,6 +26,25 @@ render_priority = 2
 shading_mode = 0
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_valxt"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_fcnvr"]
+size = Vector3(1, 0.5, 0.1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6i4jg"]
+shading_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_jyxf3"]
+_surfaces = [{
+"aabb": AABB(-0.528867, -0.278868, -0.0788675, 1.05773, 0.557735, 0.157735),
+"attribute_data": PackedByteArray("AAAAAAAAAACrqio/AAAAAKuqqj4AAAAAAACAPwAAAAAAAAAAAAAAP6uqKj8AAAA/q6qqPgAAAD8AAIA/AAAAP6uqqj4AAAAAAAAAAAAAAD+rqio/AAAAAKuqqj4AAAA/q6qqPgAAAD8AAAAAAACAP6uqKj8AAAA/q6qqPgAAgD+rqqo+AAAAP6uqKj8AAAA/q6oqPwAAAD8AAIA/AAAAP6uqqj4AAIA/q6oqPwAAgD+rqio/AACAPwAAgD8AAIA/"),
+"format": 34359742487,
+"index_count": 36,
+"index_data": PackedByteArray("AAAEAAIAAgAEAAYAAQAFAAMAAwAFAAcACAAMAAoACgAMAA4ACQANAAsACwANAA8AEAAUABIAEgAUABYAEQAVABMAEwAVABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("3GMHv7nHjj5KhaE93GMHP7nHjj5KhaG93GMHP7nHjj5KhaE93GMHv7nHjj5KhaG93GMHv7nHjr5KhaE93GMHP7nHjr5KhaG93GMHP7nHjr5KhaE93GMHv7nHjr5KhaG93GMHP7nHjj5KhaE93GMHv7nHjj5KhaG93GMHP7nHjj5KhaG93GMHv7nHjj5KhaE93GMHP7nHjr5KhaE93GMHv7nHjr5KhaG93GMHP7nHjr5KhaG93GMHv7nHjr5KhaE93GMHP7nHjj5KhaE93GMHv7nHjr5KhaE93GMHv7nHjj5KhaE93GMHP7nHjr5KhaE93GMHP7nHjj5KhaG93GMHv7nHjr5KhaG93GMHv7nHjj5KhaG93GMHP7nHjr5KhaG9/3//f////7//////AAD/v/9//3////+//////wAA/7//f/9/////v/////8AAP+//3//f////7//////AAD/v///AID/////AAAAgP9//7///wCA/////wAAAID/f/+///8AgP////8AAACA/3//v///AID/////AAAAgP9//78AgP//AAD/vwCAAAD///+/AID//wAA/78AgAAA////vwCA//8AAP+/AIAAAP///78AgP//AAD/vwCAAAD///+/")
+}]
 
 [node name="Player" type="CharacterBody3D" groups=["player"]]
 script = ExtResource("1_4soc0")
@@ -56,3 +75,16 @@ size = 13.0
 far = 500.0
 script = ExtResource("3_t0d3t")
 target = NodePath("..")
+
+[node name="Shovel" type="Node3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.435159, 0.699762)
+
+[node name="Shovel" type="MeshInstance3D" parent="Shovel"]
+transform = Transform3D(1, 0, 0, 0, 0.766044, 0.642788, 0, -0.642788, 0.766044, 0, 0, 0.180435)
+mesh = SubResource("BoxMesh_fcnvr")
+skeleton = NodePath("../..")
+
+[node name="Outline" type="MeshInstance3D" parent="Shovel/Shovel"]
+material_override = SubResource("StandardMaterial3D_6i4jg")
+mesh = SubResource("ArrayMesh_jyxf3")

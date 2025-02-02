@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://8vsamconjov1"]
 
 [ext_resource type="Script" path="res://Character/Character.gd" id="1_5wsxg"]
-[ext_resource type="Script" path="res://Character/PlayerController.gd" id="2_4t8jw"]
+[ext_resource type="Script" path="res://Character/Player/PlayerController.gd" id="2_4t8jw"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_4kxwh"]
 

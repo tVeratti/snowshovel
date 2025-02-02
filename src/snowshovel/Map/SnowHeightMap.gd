@@ -15,15 +15,16 @@ func _ready():
 
 
 func _process(delta):
-	snow_height_mask.position = _translate_player_position()
-	snow_height_mask.rotation_degrees = player.rotation_degrees.y + 90
+	if player.is_shoveling:
+		snow_height_mask.position = _translate_player_position()
+		snow_height_mask.rotation_degrees = player.rotation_degrees.y + 90
 
 
 func _translate_player_position() -> Vector2:
-	var player_position_3D:Vector3 = player.global_position
+	var shovel_position_3D:Vector3 = player.shovel.global_position
 	
-	var player_position_2D: = Vector2(
-		player_position_3D.x,
-		player_position_3D.z) * 10
+	var shovel_position_2D: = Vector2(
+		shovel_position_3D.x,
+		shovel_position_3D.z) * 10
 	
-	return player_position_2D
+	return shovel_position_2D

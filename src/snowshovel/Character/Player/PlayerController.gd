@@ -4,7 +4,7 @@ extends Node
 class_name PlayerController
 
 
-const WALK_SPEED:float = 20.0
+const WALK_SPEED:float = 10.0
 const TURN_MOVE_MULTIPLIER = 0.5
 const ACCELERATION:float = 5.0
 const DE_ACCELERATION:float = 8.0

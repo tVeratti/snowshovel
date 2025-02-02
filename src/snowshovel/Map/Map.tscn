@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://cigxkdnca66xs"]
 
 [ext_resource type="Texture2D" uid="uid://c51rittgomagk" path="res://Map/Assets/texture_08.png" id="1_2mywy"]
-[ext_resource type="Shader" path="res://Map/vertex_height.gdshader" id="2_0xqjm"]
+[ext_resource type="Shader" path="res://Common/Assets/vertex_height.gdshader" id="2_0xqjm"]
 [ext_resource type="Script" path="res://Map/SnowHeightMap.gd" id="2_pvanp"]
 [ext_resource type="Texture2D" uid="uid://jevrenyqmg6l" path="res://Map/Assets/shovel_mask.png" id="3_iie5x"]
 
