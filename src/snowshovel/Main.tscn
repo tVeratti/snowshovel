@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://sg4leuqvlxcb"]
+
+[ext_resource type="Texture2D" uid="uid://c51rittgomagk" path="res://Map/Assets/texture_08.png" id="1_ig0fh"]
+[ext_resource type="PackedScene" uid="uid://o7p2surfsx0u" path="res://Character/Player/Player.tscn" id="1_x2dak"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_e7kpl"]
+size = Vector2(100, 100)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lp32k"]
+albedo_texture = ExtResource("1_ig0fh")
+uv1_scale = Vector3(10, 10, 10)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_6s2uj"]
+data = PackedVector3Array(50, -50, 0, -50, -50, 0, 50, 50, 0, -50, -50, 0, -50, 50, 0, 50, 50, 0)
+
+[node name="Main" type="Node3D"]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.00331608, 0.999995, 0, -0.999995, -0.00331608, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+mesh = SubResource("QuadMesh_e7kpl")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_lp32k")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_6s2uj")
+
+[node name="Player" parent="." instance=ExtResource("1_x2dak")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.02458, 0)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.389253, 0.921131, 0, -0.921131, 0.389253, 0, 10.6738, 0)
