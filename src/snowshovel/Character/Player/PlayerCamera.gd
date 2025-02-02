@@ -7,7 +7,11 @@ const MOVE_SPEED:float = 10.0
 @export var target:Node3D
 
 
-@onready var initial_offset:Vector3 = global_position
+@onready var initial_offset:Vector3 = position
+
+
+func _ready():
+	top_level = true
 
 
 func _physics_process(delta):

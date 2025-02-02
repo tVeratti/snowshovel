@@ -4,7 +4,7 @@ extends Node
 class_name PlayerController
 
 
-const WALK_SPEED:float = 5.0
+const WALK_SPEED:float = 20.0
 const TURN_MOVE_MULTIPLIER = 0.5
 const ACCELERATION:float = 5.0
 const DE_ACCELERATION:float = 8.0
@@ -19,6 +19,8 @@ var direction:Vector3 = Vector3.ZERO
 
 @onready var body:CharacterBody3D = get_parent()
 
+
+# Q & E to dump snow L/R
 
 func process_velocity(delta) -> Vector3:
 	direction = _get_direction()

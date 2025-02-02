@@ -1,0 +1,79 @@
+[gd_scene load_steps=12 format=3 uid="uid://cigxkdnca66xs"]
+
+[ext_resource type="Texture2D" uid="uid://c51rittgomagk" path="res://Map/Assets/texture_08.png" id="1_2mywy"]
+[ext_resource type="Shader" path="res://Map/vertex_height.gdshader" id="2_0xqjm"]
+[ext_resource type="Script" path="res://Map/SnowHeightMap.gd" id="2_pvanp"]
+[ext_resource type="Texture2D" uid="uid://jevrenyqmg6l" path="res://Map/Assets/shovel_mask.png" id="3_iie5x"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_y64qh"]
+size = Vector2(100, 100)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u4uvr"]
+albedo_color = Color(0.215902, 0.215902, 0.215902, 1)
+albedo_texture = ExtResource("1_2mywy")
+uv1_scale = Vector3(10, 10, 10)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_js7l1"]
+data = PackedVector3Array(50, -50, 0, -50, -50, 0, 50, 50, 0, -50, -50, 0, -50, 50, 0, 50, 50, 0)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_ch0l5"]
+viewport_path = NodePath("SnowHeightMap")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ocruk"]
+resource_local_to_scene = true
+render_priority = 1
+shader = ExtResource("2_0xqjm")
+shader_parameter/mask_offset = Vector2(1, 1)
+shader_parameter/mask_scale = Vector2(-3, -2)
+shader_parameter/snow_mask = SubResource("ViewportTexture_ch0l5")
+
+[sub_resource type="BoxMesh" id="BoxMesh_osy56"]
+size = Vector3(16, 2, 16)
+subdivide_width = 128
+subdivide_height = 128
+subdivide_depth = 128
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_ehdsw"]
+viewport_path = NodePath("SnowHeightMap")
+
+[node name="Map" type="Node3D"]
+
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, -4.37114e-07, 10, 0, -10, -4.37114e-07, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("QuadMesh_y64qh")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_u4uvr")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("ConcavePolygonShape3D_js7l1")
+
+[node name="Snow" type="MeshInstance3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 1, 0, 0, 0, 10, 0, 0.1, 0)
+material_override = SubResource("ShaderMaterial_ocruk")
+mesh = SubResource("BoxMesh_osy56")
+skeleton = NodePath("")
+
+[node name="SnowHeightMap" type="SubViewport" parent="." node_paths=PackedStringArray("snow_mesh")]
+size = Vector2i(1600, 1600)
+render_target_clear_mode = 2
+render_target_update_mode = 4
+script = ExtResource("2_pvanp")
+snow_mesh = NodePath("../Snow")
+
+[node name="SnowHeightMaskOffset" type="Node2D" parent="SnowHeightMap"]
+unique_name_in_owner = true
+
+[node name="SnowHeightMask" type="Sprite2D" parent="SnowHeightMap/SnowHeightMaskOffset"]
+unique_name_in_owner = true
+texture = ExtResource("3_iie5x")
+
+[node name="HeightMapDebug" type="CanvasLayer" parent="."]
+
+[node name="TextureRect" type="TextureRect" parent="HeightMapDebug"]
+custom_minimum_size = Vector2(100, 100)
+offset_right = 40.0
+offset_bottom = 40.0
+texture = SubResource("ViewportTexture_ehdsw")
+expand_mode = 2
