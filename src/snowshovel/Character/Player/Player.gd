@@ -6,6 +6,7 @@ class_name Player
 
 signal start_shovel()
 signal end_shovel()
+signal dump_shovel(direction)
 
 
 var is_shoveling:bool = false
@@ -23,6 +24,15 @@ func _input(event):
 	
 	if Input.is_action_just_released(PlayerActions.SHOVEL):
 		_end_shoveling()
+	
+	if Input.is_action_just_pressed(PlayerActions.DUMP_LEFT):
+		pass
+		
+	if Input.is_action_just_pressed(PlayerActions.DUMP_RIGHT):
+		dump_shovel.emit(Vector3.RIGHT)
+	
+	if Input.is_action_just_pressed(PlayerActions.DUMP_LEFT):
+		dump_shovel.emit(Vector3.LEFT)
 
 
 func _physics_process(delta):

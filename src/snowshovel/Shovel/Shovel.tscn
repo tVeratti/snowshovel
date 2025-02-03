@@ -1,6 +1,34 @@
-[gd_scene load_steps=2 format=3 uid="uid://bsh613laee4iu"]
+[gd_scene load_steps=5 format=4 uid="uid://bsh613laee4iu"]
 
 [ext_resource type="Script" path="res://Shovel/Shovel.gd" id="1_2yjof"]
 
+[sub_resource type="BoxMesh" id="BoxMesh_lcg6t"]
+size = Vector3(1, 0.5, 0.1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xmxp5"]
+shading_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_01yjc"]
+_surfaces = [{
+"aabb": AABB(-0.528867, -0.278868, -0.0788675, 1.05773, 0.557735, 0.157735),
+"attribute_data": PackedByteArray("AAAAAAAAAACrqio/AAAAAKuqqj4AAAAAAACAPwAAAAAAAAAAAAAAP6uqKj8AAAA/q6qqPgAAAD8AAIA/AAAAP6uqqj4AAAAAAAAAAAAAAD+rqio/AAAAAKuqqj4AAAA/q6qqPgAAAD8AAAAAAACAP6uqKj8AAAA/q6qqPgAAgD+rqqo+AAAAP6uqKj8AAAA/q6oqPwAAAD8AAIA/AAAAP6uqqj4AAIA/q6oqPwAAgD+rqio/AACAPwAAgD8AAIA/"),
+"format": 34359742487,
+"index_count": 36,
+"index_data": PackedByteArray("AAAEAAIAAgAEAAYAAQAFAAMAAwAFAAcACAAMAAoACgAMAA4ACQANAAsACwANAA8AEAAUABIAEgAUABYAEQAVABMAEwAVABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("3GMHv7nHjj5KhaE93GMHP7nHjj5KhaG93GMHP7nHjj5KhaE93GMHv7nHjj5KhaG93GMHv7nHjr5KhaE93GMHP7nHjr5KhaG93GMHP7nHjr5KhaE93GMHv7nHjr5KhaG93GMHP7nHjj5KhaE93GMHv7nHjj5KhaG93GMHP7nHjj5KhaG93GMHv7nHjj5KhaE93GMHP7nHjr5KhaE93GMHv7nHjr5KhaG93GMHP7nHjr5KhaG93GMHv7nHjr5KhaE93GMHP7nHjj5KhaE93GMHv7nHjr5KhaE93GMHv7nHjj5KhaE93GMHP7nHjr5KhaE93GMHP7nHjj5KhaG93GMHv7nHjr5KhaG93GMHv7nHjj5KhaG93GMHP7nHjr5KhaG9/3//f////7//////AAD/v/9//3////+//////wAA/7//f/9/////v/////8AAP+//3//f////7//////AAD/v///AID/////AAAAgP9//7///wCA/////wAAAID/f/+///8AgP////8AAACA/3//v///AID/////AAAAgP9//78AgP//AAD/vwCAAAD///+/AID//wAA/78AgAAA////vwCA//8AAP+/AIAAAP///78AgP//AAD/vwCAAAD///+/")
+}]
+
 [node name="Shovel" type="Node3D"]
 script = ExtResource("1_2yjof")
+
+[node name="Shovel" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.766044, 0.642788, 0, -0.642788, 0.766044, 0, 0, 0.180435)
+mesh = SubResource("BoxMesh_lcg6t")
+skeleton = NodePath("../..")
+
+[node name="Outline" type="MeshInstance3D" parent="Shovel"]
+material_override = SubResource("StandardMaterial3D_xmxp5")
+mesh = SubResource("ArrayMesh_01yjc")

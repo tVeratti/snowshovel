@@ -5,7 +5,8 @@ class_name PlayerController
 
 
 const WALK_SPEED:float = 10.0
-const TURN_MOVE_MULTIPLIER = 0.5
+const SHOVEL_SPEED:float = 10.0
+
 const ACCELERATION:float = 5.0
 const DE_ACCELERATION:float = 8.0
 
@@ -17,7 +18,7 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var direction:Vector3 = Vector3.ZERO
 
 
-@onready var body:CharacterBody3D = get_parent()
+@onready var player:Player = get_parent()
 
 
 # Q & E to dump snow L/R
@@ -25,8 +26,10 @@ var direction:Vector3 = Vector3.ZERO
 func process_velocity(delta) -> Vector3:
 	direction = _get_direction()
 	
-	var velocity = body.velocity
-	var destination = direction * WALK_SPEED
+	var velocity = player.velocity
+	var speed = SHOVEL_SPEED if player.is_shoveling else WALK_SPEED
+	
+	var destination = direction * speed * player.shovel.weight_multiplier
 	var acceleration = DE_ACCELERATION
 	
 	var target_velocity = velocity

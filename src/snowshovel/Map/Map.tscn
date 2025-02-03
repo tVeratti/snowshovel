@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://cigxkdnca66xs"]
+[gd_scene load_steps=13 format=3 uid="uid://cigxkdnca66xs"]
 
 [ext_resource type="Texture2D" uid="uid://c51rittgomagk" path="res://Map/Assets/texture_08.png" id="1_2mywy"]
 [ext_resource type="Shader" path="res://Common/Assets/vertex_height.gdshader" id="2_0xqjm"]
-[ext_resource type="Script" path="res://Map/SnowHeightMap.gd" id="2_pvanp"]
+[ext_resource type="Script" path="res://Map/Snow/SnowHeightMap.gd" id="2_pvanp"]
 [ext_resource type="Texture2D" uid="uid://jevrenyqmg6l" path="res://Map/Assets/shovel_mask.png" id="3_iie5x"]
+[ext_resource type="Texture2D" uid="uid://cgwmsq0oj31h6" path="res://Map/Assets/player_mask.png" id="5_jcufa"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_y64qh"]
 size = Vector2(100, 100)
@@ -65,9 +66,13 @@ snow_mesh = NodePath("../Snow")
 [node name="SnowHeightMaskOffset" type="Node2D" parent="SnowHeightMap"]
 unique_name_in_owner = true
 
-[node name="SnowHeightMask" type="Sprite2D" parent="SnowHeightMap/SnowHeightMaskOffset"]
+[node name="SnowShovelMask" type="Sprite2D" parent="SnowHeightMap/SnowHeightMaskOffset"]
 unique_name_in_owner = true
 texture = ExtResource("3_iie5x")
+
+[node name="SnowPlayerMask" type="Sprite2D" parent="SnowHeightMap/SnowHeightMaskOffset"]
+unique_name_in_owner = true
+texture = ExtResource("5_jcufa")
 
 [node name="HeightMapDebug" type="CanvasLayer" parent="."]
 
