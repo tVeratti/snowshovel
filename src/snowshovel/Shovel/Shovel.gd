@@ -34,7 +34,6 @@ func _process(delta):
 		accumulated_snow = 0
 		hide()
 	
-	printt(next_snow_height, accumulated_snow)
 	accumulated_percentage = min(1.0, max(0.01, accumulated_snow) / max_snow_accumulation)
 
 

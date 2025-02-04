@@ -1,11 +1,12 @@
-[gd_scene load_steps=16 format=3 uid="uid://cigxkdnca66xs"]
+[gd_scene load_steps=17 format=3 uid="uid://cigxkdnca66xs"]
 
 [ext_resource type="Texture2D" uid="uid://c51rittgomagk" path="res://Map/Assets/texture_08.png" id="1_2mywy"]
 [ext_resource type="Shader" path="res://Common/Assets/vertex_height.gdshader" id="2_0xqjm"]
 [ext_resource type="Script" path="res://Map/Snow/SnowHeightMap.gd" id="2_pvanp"]
 [ext_resource type="Texture2D" uid="uid://dxpex3iavle5l" path="res://Map/Assets/shovel_mask_solid.png" id="4_rd3qs"]
 [ext_resource type="Texture2D" uid="uid://cgwmsq0oj31h6" path="res://Map/Assets/player_mask.png" id="5_jcufa"]
-[ext_resource type="Texture2D" uid="uid://cylst182ka7wr" path="res://Map/Assets/shovel_accumulation_mask_solid.png" id="5_jn5r2"]
+[ext_resource type="Texture2D" uid="uid://cylst182ka7wr" path="res://Map/Assets/accumulation_mask_solid.png" id="5_jn5r2"]
+[ext_resource type="Texture2D" uid="uid://dxvqu0djjv127" path="res://Map/Assets/accumulation_side_mask.png" id="7_0d7ss"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_y64qh"]
 size = Vector2(100, 100)
@@ -75,6 +76,16 @@ snow_mesh = NodePath("../Snow")
 [node name="SnowHeightMaskOffset" type="Node2D" parent="SnowHeightMap"]
 unique_name_in_owner = true
 
+[node name="ResetMask" type="ColorRect" parent="SnowHeightMap/SnowHeightMaskOffset"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(3200, 3200)
+offset_left = -800.0
+offset_top = -800.0
+offset_right = 2400.0
+offset_bottom = 2400.0
+color = Color(0.666667, 0.666667, 0.666667, 1)
+
 [node name="SnowPlayerMask" type="Sprite2D" parent="SnowHeightMap/SnowHeightMaskOffset"]
 unique_name_in_owner = true
 self_modulate = Color(0, 0, 0, 0)
@@ -89,23 +100,31 @@ texture_filter = 1
 position = Vector2(0, -6)
 texture = ExtResource("4_rd3qs")
 
-[node name="SnowShovelAccumulationMask" type="Sprite2D" parent="SnowHeightMap/SnowHeightMaskOffset/SnowPlayerMask/SnowShovelMask"]
+[node name="AccumulationFrontMask" type="Sprite2D" parent="SnowHeightMap/SnowHeightMaskOffset/SnowPlayerMask/SnowShovelMask"]
 unique_name_in_owner = true
 show_behind_parent = true
 texture_filter = 1
-position = Vector2(3.01992e-07, 1)
+position = Vector2(3.01992e-07, 3)
 texture = ExtResource("5_jn5r2")
 offset = Vector2(-1.90735e-06, -3)
 
-[node name="ResetMask" type="ColorRect" parent="SnowHeightMap/SnowHeightMaskOffset"]
+[node name="AccumulationLeftMask" type="Sprite2D" parent="SnowHeightMap/SnowHeightMaskOffset/SnowPlayerMask/SnowShovelMask"]
 unique_name_in_owner = true
-visible = false
-custom_minimum_size = Vector2(3200, 3200)
-offset_left = -800.0
-offset_top = -800.0
-offset_right = 800.0
-offset_bottom = 800.0
-color = Color(0.266667, 0.266667, 0.266667, 1)
+self_modulate = Color(1, 1, 1, 0.215686)
+show_behind_parent = true
+texture_filter = 1
+position = Vector2(-8, 2)
+texture = ExtResource("7_0d7ss")
+offset = Vector2(-1.90735e-06, -3)
+
+[node name="AccumulationRightMask" type="Sprite2D" parent="SnowHeightMap/SnowHeightMaskOffset/SnowPlayerMask/SnowShovelMask"]
+unique_name_in_owner = true
+self_modulate = Color(1, 1, 1, 0.215686)
+show_behind_parent = true
+texture_filter = 1
+position = Vector2(8, 2)
+texture = ExtResource("7_0d7ss")
+offset = Vector2(-1.90735e-06, -3)
 
 [node name="HeightMapDebug" type="CanvasLayer" parent="."]
 

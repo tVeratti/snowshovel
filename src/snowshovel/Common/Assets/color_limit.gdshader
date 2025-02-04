@@ -15,13 +15,20 @@ void fragment() {
 	
 	vec4 colors[2] = { color_a, color_b };
 	
-	for(int i = 0; i < num_colors; ++i) {
-		float color_dist = distance(colors[i], color);
-		if(color_dist < min_color_diff) {
-			min_color_diff = color_dist;
-			closest_color = colors[i];
-		}
+	if (color.r > 0.5) {
+		COLOR = color_a;
+	}
+	else {
+		COLOR = color_b;
 	}
 	
-	COLOR.rgb = closest_color.rgb;
+	//for(int i = 0; i < num_colors; ++i) {
+		//float color_dist = distance(colors[i], color);
+		//if(color_dist < min_color_diff) {
+			//min_color_diff = color_dist;
+			//closest_color = colors[i];
+		//}
+	//}
+	//
+	//COLOR.rgb = closest_color.rgb;
 }

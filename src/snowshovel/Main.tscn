@@ -7,7 +7,7 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cwn4b"]
 shader = ExtResource("5_13gbx")
 shader_parameter/color_a = Color(1, 1, 1, 1)
-shader_parameter/color_b = Color(0, 0, 0, 1)
+shader_parameter/color_b = Color(0.111197, 0.111197, 0.111197, 1)
 shader_parameter/num_colors = 2
 
 [node name="Main" type="Node3D"]
