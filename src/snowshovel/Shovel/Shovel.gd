@@ -5,7 +5,7 @@ class_name Shovel
 
 
 @export var snow_per_second:float = 10.0
-@export var max_snow_accumulation:float = 50.0
+@export var max_snow_accumulation:float = 1.0
 
 
 @onready var player:Player = get_parent()
@@ -13,7 +13,8 @@ class_name Shovel
 
 var is_on_snow:bool = false
 var accumulated_snow:float = 0.0
-var weight_multiplier:float = 1.0
+var next_snow_height:float = 0.0
+var accumulated_percentage:float = 0.0
 
 
 func _ready():
@@ -25,18 +26,20 @@ func _ready():
 func _process(delta):
 	if player.is_shoveling:
 		show()
-		if is_on_snow:
-			var player_velocity: = Vector2(player.velocity.x, player.velocity.z)
-			if not player_velocity.is_zero_approx():
-				var movement_multiplier:float = player_velocity.length() / PlayerController.WALK_SPEED
-				accumulated_snow += snow_per_second * movement_multiplier * delta
+		var player_velocity: = Vector2(player.velocity.x, player.velocity.z).length()
+		if player_velocity > 1.0:
+			var movement_multiplier:float = player_velocity / PlayerController.WALK_SPEED
+			accumulated_snow = next_snow_height
 	else:
+		accumulated_snow = 0
 		hide()
 	
-	weight_multiplier = 1.0 - min(1.0, max(0.01, accumulated_snow) / max_snow_accumulation)
+	printt(next_snow_height, accumulated_snow)
+	accumulated_percentage = min(1.0, max(0.01, accumulated_snow) / max_snow_accumulation)
 
 
-func _on_snow_shovel_entered() -> void:
+func _on_snow_shovel_entered(height:float) -> void:
+	#accumulated_snow = height
 	is_on_snow = true
 
 

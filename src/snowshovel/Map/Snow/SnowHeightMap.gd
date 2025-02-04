@@ -1,5 +1,7 @@
 extends SubViewport
 
+## Number of pixels to lookahead of shovel mask for snow level.
+const SHOVEL_FORWARD_OFFSET:float = 8
 
 @export var snow_mesh:MeshInstance3D
 
@@ -10,13 +12,18 @@ var previous_shovel_pixel:Color
 
 @onready var snow_height_mask_offset:Node2D = %SnowHeightMaskOffset
 @onready var snow_shovel_mask:Sprite2D = %SnowShovelMask
+@onready var snow_shovel_accumuluation_mask:Sprite2D = %SnowShovelAccumulationMask
 @onready var snow_player_mask:Sprite2D = %SnowPlayerMask
+@onready var reset_mask:ColorRect = %ResetMask
 @onready var player:Player = get_tree().get_first_node_in_group("player")
 
 
 func _ready():
 	var initial_position_offset = (size / 2.0)
 	snow_height_mask_offset.position = initial_position_offset
+	
+	await get_tree().create_timer(0.1).timeout
+	#reset_mask.hide()
 
 
 func _process(_delta):
@@ -24,6 +31,8 @@ func _process(_delta):
 	
 	var player_position:Vector2 = _translate_position(player.global_position)
 	snow_player_mask.position = player_position
+	var player_rotation = rad_to_deg(Vector2(player.basis.z.x, player.basis.z.z).angle()) + 90
+	snow_player_mask.rotation_degrees = player_rotation
 	_check_player_pixel(snow_mask_image, player_position)
 	
 	var shovel_position:Vector2 = _translate_position(player.shovel.global_position)
@@ -31,8 +40,11 @@ func _process(_delta):
 	
 	# Only update shovel mask if the character is actively shoveling.
 	if player.is_shoveling:
-		snow_shovel_mask.position = player_position
-		snow_shovel_mask.rotation_degrees = player.rotation_degrees.y + 90
+		snow_shovel_mask.show()
+		snow_shovel_accumuluation_mask.modulate.a = 0.1 + (0.1 * player.shovel.accumulated_percentage)
+		snow_shovel_accumuluation_mask.scale.y = 1 + (1 * player.shovel.accumulated_percentage)
+	else:
+		snow_shovel_mask.hide()
 
 
 func _translate_position(position_3D:Vector3) -> Vector2:
@@ -61,7 +73,8 @@ func _check_player_pixel(mask:Image, player_position:Vector2) -> void:
 
 
 func _check_shovel_pixel(mask:Image, shovel_position:Vector2) -> void:
-	var shovel_pixel: = mask.get_pixelv(shovel_position + snow_height_mask_offset.position)
+	var forward_offset = Vector2.UP.rotated(deg_to_rad(snow_player_mask.rotation_degrees)) * SHOVEL_FORWARD_OFFSET
+	var shovel_pixel: = mask.get_pixelv(shovel_position + snow_height_mask_offset.position + forward_offset)
 	
 	var is_on_snow:bool = shovel_pixel.r > 0
 	var is_previous_on_snow:bool = previous_shovel_pixel.r > 0
@@ -70,10 +83,11 @@ func _check_shovel_pixel(mask:Image, shovel_position:Vector2) -> void:
 	var did_exit_snow:bool = not is_on_snow and is_previous_on_snow
 	
 	if did_enter_snow:
-		SnowManager.shovel_snow_entered.emit()
+		SnowManager.shovel_snow_entered.emit(shovel_pixel.r)
 	elif did_exit_snow:
 		SnowManager.shovel_snow_exited.emit()
 	
+	player.shovel.next_snow_height = shovel_pixel.r
 	previous_shovel_pixel = shovel_pixel
 
 

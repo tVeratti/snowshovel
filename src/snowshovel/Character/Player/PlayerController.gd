@@ -14,7 +14,7 @@ const DE_ACCELERATION:float = 8.0
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
-
+var speed:float = WALK_SPEED
 var direction:Vector3 = Vector3.ZERO
 
 
@@ -27,9 +27,10 @@ func process_velocity(delta) -> Vector3:
 	direction = _get_direction()
 	
 	var velocity = player.velocity
-	var speed = SHOVEL_SPEED if player.is_shoveling else WALK_SPEED
+	speed = SHOVEL_SPEED if player.is_shoveling else WALK_SPEED
 	
-	var destination = direction * speed * player.shovel.weight_multiplier
+	var weight_multiplier:float = 1.0 - player.shovel.accumulated_percentage
+	var destination = direction * speed * weight_multiplier
 	var acceleration = DE_ACCELERATION
 	
 	var target_velocity = velocity
