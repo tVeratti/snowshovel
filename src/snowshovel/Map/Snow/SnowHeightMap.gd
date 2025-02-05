@@ -2,6 +2,7 @@ extends SubViewport
 
 ## Number of pixels to lookahead of shovel mask for snow level.
 const SHOVEL_FORWARD_OFFSET:float = 6
+const SHOVEL_SIDE_OFFSET:float = 14
 
 @export var snow_mesh:MeshInstance3D
 
@@ -10,6 +11,7 @@ var previous_player_pixel:Color
 var previous_shovel_pixel:Color
 
 
+@onready var shovel_root:Node2D = %ShovelRoot
 @onready var snow_height_mask_offset:Node2D = %SnowHeightMaskOffset
 @onready var snow_shovel_mask:Sprite2D = %SnowShovelMask
 @onready var accumuluation_front_mask:Sprite2D = %AccumulationFrontMask
@@ -26,8 +28,12 @@ func _ready():
 	var initial_position_offset = (size / 2.0)
 	snow_height_mask_offset.position = initial_position_offset
 	
-	await get_tree().create_timer(0.1).timeout
-	#reset_mask.hide()
+	player.shovel.dump_started.connect(_on_dump_shovel_started)
+	player.shovel.dump_completed.connect(_on_dump_shovel_completed)
+	
+	reset_mask.show()
+	await get_tree().create_timer(1).timeout
+	reset_mask.hide()
 
 
 func _process(_delta):
@@ -38,6 +44,10 @@ func _process(_delta):
 	var player_rotation = rad_to_deg(Vector2(player.basis.z.x, player.basis.z.z).angle()) + 90
 	snow_player_mask.rotation_degrees = player_rotation
 	_check_player_pixel(snow_mask_image, player_position)
+	
+	var shovel_root_offset:Vector2 = _translate_position(player.shovel_root.position)
+	shovel_root.position = shovel_root_offset
+	shovel_root.position.x *= -1
 	
 	var shovel_position:Vector2 = _translate_position(player.shovel.global_position)
 	_check_shovel_pixel(snow_mask_image, shovel_position)
@@ -115,3 +125,19 @@ func _check_shovel_pixel(mask:Image, shovel_position:Vector2) -> void:
 func _get_mask_image() -> Image:
 	var snow_mask_texture:ViewportTexture = snow_mesh.material_override.get_shader_parameter("snow_mask")
 	return snow_mask_texture.get_image()
+
+
+func _on_dump_shovel_started(direction:Vector3) -> void:
+	# Flash the current accumulation BLACK in order to clear it out
+	accumuluation_front_mask.modulate = Color.BLACK
+	
+	await get_tree().create_timer(player.shovel.dump_duration * 0.5).timeout
+	
+	# Flash the shovel accumulation mask at its current pixel height in given direction
+	accumuluation_front_mask.modulate = Color(1, 1, 1, player.shovel.accumulated_percentage)
+	accumuluation_front_mask.position.x = direction.x * SHOVEL_SIDE_OFFSET
+
+
+func _on_dump_shovel_completed() -> void:
+	accumuluation_front_mask.modulate.a = 0
+	accumuluation_front_mask.position.x = 0

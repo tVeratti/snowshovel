@@ -4,11 +4,17 @@ extends Node3D
 class_name Shovel
 
 
+signal dump_started(direction)
+signal dump_completed()
+
+
 @export var snow_per_second:float = 10.0
 @export var max_snow_accumulation:float = 1.0
+@export var dump_duration:float = 1.0
 
 
-@onready var player:Player = get_parent()
+@onready var player:Player = get_parent().get_parent()
+@onready var dump_timer:Timer = %DumpTimer
 
 
 var is_on_snow:bool = false
@@ -27,14 +33,16 @@ func _process(delta):
 	if player.is_shoveling:
 		show()
 		var player_velocity: = Vector2(player.velocity.x, player.velocity.z).length()
-		if player_velocity > 1.0:
-			var movement_multiplier:float = player_velocity / PlayerController.WALK_SPEED
+		if player_velocity > 0.1:
 			accumulated_snow = next_snow_height
 	else:
 		accumulated_snow = 0
 		hide()
 	
-	accumulated_percentage = min(1.0, max(0.01, accumulated_snow) / max_snow_accumulation)
+	if accumulated_snow == 0.0:
+		accumulated_percentage = 0.0
+	else:
+		accumulated_percentage = min(1.0, accumulated_snow / max_snow_accumulation)
 
 
 func _on_snow_shovel_entered(height:float) -> void:
@@ -47,4 +55,14 @@ func _on_snow_shovel_exited() -> void:
 
 
 func _on_shovel_dumped(direction:Vector3) -> void:
-	accumulated_snow = 0
+	if not dump_timer.is_stopped(): return
+	dump_timer.start(dump_duration)
+	
+	player.is_dumping = true
+	dump_started.emit(direction)
+
+
+func _on_dump_timer_timeout():
+	accumulated_snow = 0.0
+	player.is_dumping = false
+	dump_completed.emit()

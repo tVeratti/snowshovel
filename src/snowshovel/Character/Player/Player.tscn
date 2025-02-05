@@ -58,6 +58,18 @@ far = 500.0
 script = ExtResource("3_t0d3t")
 target = NodePath("..")
 
-[node name="Shovel" parent="." instance=ExtResource("4_sokp6")]
+[node name="ShovelRoot" type="Node3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, 0, 0)
+
+[node name="Shovel" parent="ShovelRoot" instance=ExtResource("4_sokp6")]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.536975, 0.610448)
+
+[node name="ShovelHoldLeft" type="Marker3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, 0, 0)
+
+[node name="ShovelHoldRight" type="Marker3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, 0, 0)

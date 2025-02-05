@@ -93,14 +93,17 @@ texture_filter = 1
 position = Vector2(17, 19)
 texture = ExtResource("5_jcufa")
 
-[node name="SnowShovelMask" type="Sprite2D" parent="SnowHeightMap/SnowHeightMaskOffset/SnowPlayerMask"]
+[node name="ShovelRoot" type="Node2D" parent="SnowHeightMap/SnowHeightMaskOffset/SnowPlayerMask"]
+unique_name_in_owner = true
+
+[node name="SnowShovelMask" type="Sprite2D" parent="SnowHeightMap/SnowHeightMaskOffset/SnowPlayerMask/ShovelRoot"]
 unique_name_in_owner = true
 self_modulate = Color(0, 0, 0, 1)
 texture_filter = 1
 position = Vector2(0, -6)
 texture = ExtResource("4_rd3qs")
 
-[node name="AccumulationFrontMask" type="Sprite2D" parent="SnowHeightMap/SnowHeightMaskOffset/SnowPlayerMask/SnowShovelMask"]
+[node name="AccumulationFrontMask" type="Sprite2D" parent="SnowHeightMap/SnowHeightMaskOffset/SnowPlayerMask/ShovelRoot/SnowShovelMask"]
 unique_name_in_owner = true
 show_behind_parent = true
 texture_filter = 1
@@ -108,7 +111,7 @@ position = Vector2(3.01992e-07, 3)
 texture = ExtResource("5_jn5r2")
 offset = Vector2(-1.90735e-06, -3)
 
-[node name="AccumulationLeftMask" type="Sprite2D" parent="SnowHeightMap/SnowHeightMaskOffset/SnowPlayerMask/SnowShovelMask"]
+[node name="AccumulationLeftMask" type="Sprite2D" parent="SnowHeightMap/SnowHeightMaskOffset/SnowPlayerMask/ShovelRoot/SnowShovelMask"]
 unique_name_in_owner = true
 self_modulate = Color(1, 1, 1, 0.215686)
 show_behind_parent = true
@@ -117,7 +120,7 @@ position = Vector2(-8, 2)
 texture = ExtResource("7_0d7ss")
 offset = Vector2(-1.90735e-06, -3)
 
-[node name="AccumulationRightMask" type="Sprite2D" parent="SnowHeightMap/SnowHeightMaskOffset/SnowPlayerMask/SnowShovelMask"]
+[node name="AccumulationRightMask" type="Sprite2D" parent="SnowHeightMap/SnowHeightMaskOffset/SnowPlayerMask/ShovelRoot/SnowShovelMask"]
 unique_name_in_owner = true
 self_modulate = Color(1, 1, 1, 0.215686)
 show_behind_parent = true
