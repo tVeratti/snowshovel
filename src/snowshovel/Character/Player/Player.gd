@@ -19,22 +19,24 @@ var is_dumping:bool = false
 @onready var controller:PlayerController = $PlayerController
 
 
+func _ready() -> void:
+	shovel.dump_completed.connect(_on_dump_complete)
+
 
 func _input(event):
+	if Input.is_action_just_pressed(PlayerActions.DUMP_RIGHT):
+		var direction: = Vector3.RIGHT if rotation_degrees.y > 0 else Vector3.LEFT
+		_start_dumping(direction)
+	
+	if Input.is_action_just_pressed(PlayerActions.DUMP_LEFT):
+		var direction: = Vector3.LEFT if rotation_degrees.y > 0 else Vector3.RIGHT
+		_start_dumping(direction)
+	
 	if Input.is_action_just_pressed(PlayerActions.SHOVEL):
 		_start_shoveling()
 	
 	if Input.is_action_just_released(PlayerActions.SHOVEL):
 		_end_shoveling()
-	
-	if Input.is_action_just_pressed(PlayerActions.DUMP_LEFT):
-		pass
-		
-	if Input.is_action_just_pressed(PlayerActions.DUMP_RIGHT):
-		dump_shovel.emit(Vector3.RIGHT)
-	
-	if Input.is_action_just_pressed(PlayerActions.DUMP_LEFT):
-		dump_shovel.emit(Vector3.LEFT)
 
 
 func _physics_process(delta):
@@ -59,6 +61,18 @@ func _start_shoveling() -> void:
 
 func _end_shoveling() -> void:
 	if not is_shoveling: return
+	if is_dumping: return
 	
+	is_shoveling = false
+	end_shovel.emit()
+
+
+func _start_dumping(direction:Vector3) -> void:
+	is_dumping = true
+	dump_shovel.emit(direction)
+
+
+func _on_dump_complete() -> void:
+	is_dumping = false
 	is_shoveling = false
 	end_shovel.emit()

@@ -36,8 +36,9 @@ func _process(delta):
 		if player_velocity > 0.1:
 			accumulated_snow = next_snow_height
 	else:
-		accumulated_snow = 0
-		hide()
+		if dump_timer.is_stopped():
+			accumulated_snow = 0
+			hide()
 	
 	if accumulated_snow == 0.0:
 		accumulated_percentage = 0.0
@@ -46,7 +47,6 @@ func _process(delta):
 
 
 func _on_snow_shovel_entered(height:float) -> void:
-	#accumulated_snow = height
 	is_on_snow = true
 
 
@@ -57,12 +57,9 @@ func _on_snow_shovel_exited() -> void:
 func _on_shovel_dumped(direction:Vector3) -> void:
 	if not dump_timer.is_stopped(): return
 	dump_timer.start(dump_duration)
-	
-	player.is_dumping = true
 	dump_started.emit(direction)
 
 
 func _on_dump_timer_timeout():
 	accumulated_snow = 0.0
-	player.is_dumping = false
 	dump_completed.emit()
