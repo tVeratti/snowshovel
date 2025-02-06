@@ -1,8 +1,9 @@
-[gd_scene load_steps=17 format=3 uid="uid://cigxkdnca66xs"]
+[gd_scene load_steps=18 format=3 uid="uid://cigxkdnca66xs"]
 
 [ext_resource type="Texture2D" uid="uid://c51rittgomagk" path="res://Map/Assets/texture_08.png" id="1_2mywy"]
 [ext_resource type="Shader" path="res://Common/Assets/vertex_height.gdshader" id="2_0xqjm"]
 [ext_resource type="Script" path="res://Map/Snow/SnowHeightMap.gd" id="2_pvanp"]
+[ext_resource type="Texture2D" uid="uid://7uo85eusem3g" path="res://Map/Assets/snow_height_map.png" id="4_ky8tb"]
 [ext_resource type="Texture2D" uid="uid://dxpex3iavle5l" path="res://Map/Assets/shovel_mask_solid.png" id="4_rd3qs"]
 [ext_resource type="Texture2D" uid="uid://cgwmsq0oj31h6" path="res://Map/Assets/player_mask.png" id="5_jcufa"]
 [ext_resource type="Texture2D" uid="uid://cylst182ka7wr" path="res://Map/Assets/accumulation_mask_solid.png" id="5_jn5r2"]
@@ -76,15 +77,13 @@ snow_mesh = NodePath("../Snow")
 [node name="SnowHeightMaskOffset" type="Node2D" parent="SnowHeightMap"]
 unique_name_in_owner = true
 
-[node name="ResetMask" type="ColorRect" parent="SnowHeightMap/SnowHeightMaskOffset"]
+[node name="ResetMask" type="TextureRect" parent="SnowHeightMap/SnowHeightMaskOffset"]
 unique_name_in_owner = true
-visible = false
-custom_minimum_size = Vector2(3200, 3200)
 offset_left = -800.0
 offset_top = -800.0
-offset_right = 2400.0
-offset_bottom = 2400.0
-color = Color(0.666667, 0.666667, 0.666667, 1)
+offset_right = 800.0
+offset_bottom = 800.0
+texture = ExtResource("4_ky8tb")
 
 [node name="SnowPlayerMask" type="Sprite2D" parent="SnowHeightMap/SnowHeightMaskOffset"]
 unique_name_in_owner = true

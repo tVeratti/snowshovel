@@ -15,7 +15,7 @@ void fragment() {
 	
 	vec4 colors[2] = { color_a, color_b };
 	
-	if (color.r > 0.5) {
+	if (color.r > 0.2) {
 		COLOR = color_a;
 	}
 	else {

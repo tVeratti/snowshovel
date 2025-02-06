@@ -1,9 +1,12 @@
-[gd_scene load_steps=10 format=4 uid="uid://o7p2surfsx0u"]
+[gd_scene load_steps=11 format=4 uid="uid://o7p2surfsx0u"]
 
 [ext_resource type="Script" path="res://Character/Player/Player.gd" id="1_4soc0"]
 [ext_resource type="Script" path="res://Character/Player/PlayerController.gd" id="2_uw8rb"]
 [ext_resource type="Script" path="res://Character/Player/PlayerCamera.gd" id="3_t0d3t"]
 [ext_resource type="PackedScene" uid="uid://bsh613laee4iu" path="res://Shovel/Shovel.tscn" id="4_sokp6"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2jm6v"]
+albedo_color = Color(0, 0, 0, 1)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_4kxwh"]
 
@@ -35,6 +38,7 @@ script = ExtResource("1_4soc0")
 script = ExtResource("2_uw8rb")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_2jm6v")
 mesh = SubResource("CapsuleMesh_4kxwh")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="MeshInstance3D"]

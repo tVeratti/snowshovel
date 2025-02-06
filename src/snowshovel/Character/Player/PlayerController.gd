@@ -29,7 +29,7 @@ func process_velocity(delta) -> Vector3:
 	var velocity = player.velocity
 	speed = SHOVEL_SPEED if player.is_shoveling else WALK_SPEED
 	
-	var weight_multiplier:float = 1.0 - player.shovel.accumulated_percentage
+	var weight_multiplier:float = 1.0 # 1.0 - player.shovel.accumulated_percentage
 	var destination = direction * speed * weight_multiplier
 	var acceleration = DE_ACCELERATION
 	
