@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cigxkdnca66xs"]
+[gd_scene load_steps=20 format=3 uid="uid://cigxkdnca66xs"]
 
 [ext_resource type="Texture2D" uid="uid://c51rittgomagk" path="res://Map/Assets/texture_08.png" id="1_2mywy"]
 [ext_resource type="Shader" path="res://Common/Assets/vertex_height.gdshader" id="2_0xqjm"]
@@ -8,12 +8,14 @@
 [ext_resource type="Texture2D" uid="uid://cgwmsq0oj31h6" path="res://Map/Assets/player_mask.png" id="5_jcufa"]
 [ext_resource type="Texture2D" uid="uid://cylst182ka7wr" path="res://Map/Assets/accumulation_mask_solid.png" id="5_jn5r2"]
 [ext_resource type="Texture2D" uid="uid://dxvqu0djjv127" path="res://Map/Assets/accumulation_side_mask.png" id="7_0d7ss"]
+[ext_resource type="PackedScene" uid="uid://cb82ofcdmeaj6" path="res://Obstacle/Tree.tscn" id="9_6gbet"]
+[ext_resource type="PackedScene" uid="uid://dkaofpxf1nhwl" path="res://Obstacle/House.tscn" id="10_srtwq"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_y64qh"]
 size = Vector2(100, 100)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u4uvr"]
-albedo_color = Color(0.215902, 0.215902, 0.215902, 1)
+albedo_color = Color(0.0475577, 0.0475577, 0.0475576, 1)
 albedo_texture = ExtResource("1_2mywy")
 uv1_scale = Vector3(10, 10, 10)
 
@@ -137,3 +139,14 @@ offset_right = 40.0
 offset_bottom = 40.0
 texture = SubResource("ViewportTexture_ehdsw")
 expand_mode = 2
+
+[node name="Tree" parent="." instance=ExtResource("9_6gbet")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.3587, 0, -25.8384)
+
+[node name="Tree2" parent="." instance=ExtResource("9_6gbet")]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -41.3492, 0.221306, -18.5117)
+
+[node name="Houses" type="Node3D" parent="."]
+
+[node name="House" parent="Houses" instance=ExtResource("10_srtwq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.2842, 0.954332, -50.7495)

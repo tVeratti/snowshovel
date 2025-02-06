@@ -1,0 +1,63 @@
+[gd_scene load_steps=8 format=4 uid="uid://dkaofpxf1nhwl"]
+
+[ext_resource type="Material" uid="uid://1goorvrk4pcf" path="res://Common/object_dark_material.tres" id="1_gbnx8"]
+[ext_resource type="Material" uid="uid://bg6c61rm7s8wd" path="res://Common/outline_unshaded_material.tres" id="1_na2lk"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_yw8ea"]
+size = Vector3(20, 10, 20)
+
+[sub_resource type="PrismMesh" id="PrismMesh_6f4yl"]
+size = Vector3(21, 10, 21)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_g7tod"]
+_surfaces = [{
+"aabb": AABB(-10.5438, -5.06356, -10.5636, 21.0877, 10.1452, 21.1271),
+"attribute_data": PackedByteArray("q6oqPgAAAABWVVU/AAAAAKuqKj4AAAAAVlVVPwAAAAAAAAAAAAAAP6uqKj8AAAA/q6qqPgAAAD8AAIA/AAAAP6uqqj4AAAAAAAAAAAAAAD+rqio/AAAAAKuqqj4AAAA/q6qqPgAAAD8AAAAAAACAP6uqKj8AAAA/q6qqPgAAgD+rqio/AAAAPwAAgD8AAAA/q6oqPwAAgD8AAIA/AACAPw=="),
+"format": 34359742487,
+"index_count": 24,
+"index_data": PackedByteArray("AgAEAAYAAwAFAAcACAAMAAoACgAMAA4ACQANAAsACwANAA8AEAASABEAEQASABMA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 20,
+"vertex_data": PackedByteArray("2of+Oo2cokCU7ChBC4j+Oo2cokCU7CjB2of+Oo2cokCU7ChBC4j+Oo2cokCU7CjBibMowacIosBTBClBibMoQacIosBTBCnBibMoQacIosBTBClBibMowacIosBTBCnB2of+Oo2cokCU7ChBC4j+Oo2cokCU7CjBC4j+Oo2cokCU7CjB2of+Oo2cokCU7ChBibMoQacIosBTBClBibMowacIosBTBCnBibMoQacIosBTBCnBibMowacIosBTBClBibMowacIosBTBClBibMoQacIosBTBClBibMowacIosBTBCnBibMoQacIosBTBCnB/3//f////7//////AAD/v/9//3////+//////wAA/7//f/9/////v/////8AAP+//3//f////7//////AAD/v2++jsH/////j0GOwf9//79vvo7B/////49BjsH/f/+/b76Owf////+PQY7B/3//v2++jsH/////j0GOwf9//78AgAAA////vwCAAAD///+/AIAAAP///78AgAAA////vw==")
+}]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_rr5e0"]
+_surfaces = [{
+"aabb": AABB(-10.0577, -5.05773, -10.0577, 20.1155, 10.1155, 20.1155),
+"attribute_data": PackedByteArray("AAAAAAAAAACrqio/AAAAAKuqqj4AAAAAAACAPwAAAAAAAAAAAAAAP6uqKj8AAAA/q6qqPgAAAD8AAIA/AAAAP6uqqj4AAAAAAAAAAAAAAD+rqio/AAAAAKuqqj4AAAA/q6qqPgAAAD8AAAAAAACAP6uqKj8AAAA/q6qqPgAAgD+rqqo+AAAAP6uqKj8AAAA/q6oqPwAAAD8AAIA/AAAAP6uqqj4AAIA/q6oqPwAAgD+rqio/AACAPwAAgD8AAIA/"),
+"format": 34359742487,
+"index_count": 36,
+"index_data": PackedByteArray("AAAEAAIAAgAEAAYAAQAFAAMAAwAFAAcACAAMAAoACgAMAA4ACQANAAsACwANAA8AEAAUABIAEgAUABYAEQAVABMAEwAVABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("fOwgwffYoUB87CBBfOwgQffYoUB87CDBfOwgQffYoUB87CBBfOwgwffYoUB87CDBfOwgwffYocB87CBBfOwgQffYocB87CDBfOwgQffYocB87CBBfOwgwffYocB87CDBfOwgQffYoUB87CBBfOwgwffYoUB87CDBfOwgQffYoUB87CDBfOwgwffYoUB87CBBfOwgQffYocB87CBBfOwgwffYocB87CDBfOwgQffYocB87CDBfOwgwffYocB87CBBfOwgQffYoUB87CBBfOwgwffYocB87CBBfOwgwffYoUB87CBBfOwgQffYocB87CBBfOwgQffYoUB87CDBfOwgwffYocB87CDBfOwgwffYoUB87CDBfOwgQffYocB87CDB/3//f////7//////AAD/v/9//3////+//////wAA/7//f/9/////v/////8AAP+//3//f////7//////AAD/v///AID/////AAAAgP9//7///wCA/////wAAAID/f/+///8AgP////8AAACA/3//v///AID/////AAAAgP9//78AgP//AAD/vwCAAAD///+/AID//wAA/78AgAAA////vwCA//8AAP+/AIAAAP///78AgP//AAD/vwCAAAD///+/")
+}]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_386l4"]
+points = PackedVector3Array(-10, -5, -10, -10, 5, -10, 10, -5, -10, -10, -5, 10, -10, 5, 10, 10, 5, -10, 10, -5, 10, 10, 5, 10)
+
+[node name="House" type="StaticBody3D"]
+
+[node name="House" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.92399, 0)
+material_override = ExtResource("1_gbnx8")
+mesh = SubResource("BoxMesh_yw8ea")
+
+[node name="Roof" type="MeshInstance3D" parent="House"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.78242, 0)
+material_override = ExtResource("1_gbnx8")
+mesh = SubResource("PrismMesh_6f4yl")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="House/Roof"]
+material_override = ExtResource("1_na2lk")
+mesh = SubResource("ArrayMesh_g7tod")
+
+[node name="Outline" type="MeshInstance3D" parent="House"]
+material_override = ExtResource("1_na2lk")
+mesh = SubResource("ArrayMesh_rr5e0")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.92399, 0)
+shape = SubResource("ConvexPolygonShape3D_386l4")

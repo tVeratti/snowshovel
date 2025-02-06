@@ -1,13 +1,11 @@
-[gd_scene load_steps=9 format=4 uid="uid://bsh613laee4iu"]
+[gd_scene load_steps=8 format=4 uid="uid://bsh613laee4iu"]
 
 [ext_resource type="Script" path="res://Shovel/Shovel.gd" id="1_2yjof"]
-[ext_resource type="Material" uid="uid://b8sbjtwypg1ts" path="res://Shovel/shovel_material.tres" id="2_72elo"]
+[ext_resource type="Material" uid="uid://1goorvrk4pcf" path="res://Common/object_dark_material.tres" id="2_kc1l0"]
+[ext_resource type="Material" uid="uid://bg6c61rm7s8wd" path="res://Common/outline_unshaded_material.tres" id="3_tupjl"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_lcg6t"]
 size = Vector3(1, 0.5, 0.1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xmxp5"]
-shading_mode = 0
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_01yjc"]
 _surfaces = [{
@@ -25,9 +23,6 @@ _surfaces = [{
 [sub_resource type="CylinderMesh" id="CylinderMesh_u1t1s"]
 top_radius = 0.04
 bottom_radius = 0.04
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4ab2e"]
-shading_mode = 0
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_o5hal"]
 _surfaces = [{
@@ -47,21 +42,21 @@ script = ExtResource("1_2yjof")
 
 [node name="Shovel" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.766044, 0.642788, 0, -0.642788, 0.766044, 0, 0, 0.180435)
-material_override = ExtResource("2_72elo")
+material_override = ExtResource("2_kc1l0")
 mesh = SubResource("BoxMesh_lcg6t")
 skeleton = NodePath("../..")
 
 [node name="Outline" type="MeshInstance3D" parent="Shovel"]
-material_override = SubResource("StandardMaterial3D_xmxp5")
+material_override = ExtResource("3_tupjl")
 mesh = SubResource("ArrayMesh_01yjc")
 
 [node name="Handle" type="MeshInstance3D" parent="Shovel"]
 transform = Transform3D(1, 0, 0, 0, 1, 2.98023e-08, 0, -2.98023e-08, 1, 0, 1.22355, -0.00593454)
-material_override = ExtResource("2_72elo")
+material_override = ExtResource("2_kc1l0")
 mesh = SubResource("CylinderMesh_u1t1s")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Shovel/Handle"]
-material_override = SubResource("StandardMaterial3D_4ab2e")
+material_override = ExtResource("3_tupjl")
 mesh = SubResource("ArrayMesh_o5hal")
 
 [node name="DumpTimer" type="Timer" parent="."]

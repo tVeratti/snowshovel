@@ -13,7 +13,8 @@ void fragment() {
 	float min_color_diff = 10000.0;
 	vec4 closest_color = vec4(0.0,0.0,0.0,1.0);
 	
-	vec4 colors[2] = { color_a, color_b };
+	//float distance_from_black = color.r;
+	//COLOR = mix(color_b, color_a, distance_from_black);
 	
 	if (color.r > 0.2) {
 		COLOR = color_a;
