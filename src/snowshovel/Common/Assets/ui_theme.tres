@@ -1,0 +1,25 @@
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://d32w5eyjl3awa"]
+
+[ext_resource type="FontFile" uid="uid://cxnlwrb776v4q" path="res://Common/Assets/Sansita-Regular.ttf" id="1_yu1bq"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_odxtf"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_spni7"]
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[resource]
+default_font = ExtResource("1_yu1bq")
+Button/colors/font_color = Color(1, 1, 1, 1)
+Button/colors/font_hover_color = Color(0, 0, 0, 1)
+Button/fonts/font = ExtResource("1_yu1bq")
+Button/styles/hover = SubResource("StyleBoxFlat_odxtf")
+Button/styles/normal = SubResource("StyleBoxFlat_spni7")
