@@ -116,7 +116,8 @@ func _check_shovel_pixel(mask:Image, shovel_position:Vector2) -> void:
 			if player.shovel.accumulated_percentage > 0.5:
 				accumuluation_left_mask.modulate.a = left_pixel.r
 				accumuluation_right_mask.modulate.a = right_pixel.r
-	else:
+	elif not player.is_dumping and snow_shovel_mask.visible:
+		print("hide")
 		snow_shovel_mask.hide()
 	
 	player.shovel.next_snow_height = shovel_pixel.r
@@ -130,14 +131,23 @@ func _get_mask_image() -> Image:
 
 func _on_dump_shovel_started(direction:Vector3) -> void:
 	# Flash the current accumulation BLACK in order to clear it out
-	accumuluation_front_mask.modulate = Color.BLACK
-	var saved_accumulation:float = player.shovel.accumulated_percentage
+	snow_shovel_mask.show()
+	var saved_accumulation:float = player.shovel.next_snow_height
 	
-	await get_tree().create_timer(player.shovel.dump_duration * 0.45).timeout
+	await get_tree().create_timer(player.shovel.dump_duration * 0.1).timeout
+	
+	accumuluation_front_mask.modulate = Color.BLACK
+	
+	await get_tree().create_timer(player.shovel.dump_duration * 0.4).timeout
 	
 	# Flash the shovel accumulation mask at its current pixel height in given direction
-	accumuluation_front_mask.modulate = Color(1, 1, 1, saved_accumulation)
+	var map: = _get_mask_image()
+	accumuluation_front_mask.modulate = Color.WHITE
+	accumuluation_front_mask.modulate.a = 0
 	accumuluation_front_mask.position.x = direction.x * SHOVEL_SIDE_OFFSET
+	
+	var receiving_snow_height: = map.get_pixelv(accumuluation_front_mask.global_position).r
+	accumuluation_front_mask.modulate.a = min(1, saved_accumulation + receiving_snow_height)
 
 
 func _on_dump_shovel_completed() -> void:
