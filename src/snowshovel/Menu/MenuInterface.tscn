@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3 uid="uid://dmdevl1o02m3"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_l3pu4"]
+
+[node name="MenuInterface" type="MarginContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Layout" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Layout"]
+layout_mode = 2
+text = "Snow Hero"
+label_settings = SubResource("LabelSettings_l3pu4")
+
+[node name="Buttons" type="VBoxContainer" parent="Layout"]
+layout_mode = 2
+
+[node name="Play" type="Button" parent="Layout/Buttons"]
+layout_mode = 2
+text = "Play"
+
+[node name="Button" type="Button" parent="Layout/Buttons"]
+layout_mode = 2
+text = "Quit"

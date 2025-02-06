@@ -1,8 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://sg4leuqvlxcb"]
+[gd_scene load_steps=7 format=3 uid="uid://sg4leuqvlxcb"]
 
+[ext_resource type="Script" path="res://Main.gd" id="1_hb5ac"]
 [ext_resource type="PackedScene" uid="uid://o7p2surfsx0u" path="res://Character/Player/Player.tscn" id="1_x2dak"]
 [ext_resource type="PackedScene" uid="uid://cigxkdnca66xs" path="res://Map/Map.tscn" id="3_ghs0a"]
 [ext_resource type="Shader" path="res://Common/Assets/color_limit.gdshader" id="5_13gbx"]
+[ext_resource type="PackedScene" uid="uid://dmdevl1o02m3" path="res://Menu/MenuInterface.tscn" id="5_uwt88"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cwn4b"]
 shader = ExtResource("5_13gbx")
@@ -11,6 +13,7 @@ shader_parameter/color_b = Color(0.111197, 0.111197, 0.111197, 1)
 shader_parameter/num_colors = 2
 
 [node name="Main" type="Node3D"]
+script = ExtResource("1_hb5ac")
 
 [node name="Player" parent="." instance=ExtResource("1_x2dak")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.654, 0)
@@ -22,6 +25,9 @@ transform = Transform3D(1, 0, 0, 0, 0.771203, 0.63659, 0, -0.63659, 0.771203, 0,
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
+[node name="MenuInterface" parent="CanvasLayer" instance=ExtResource("5_uwt88")]
+unique_name_in_owner = true
+
 [node name="ColorLimitScreenShader" type="ColorRect" parent="CanvasLayer"]
 visible = false
 material = SubResource("ShaderMaterial_cwn4b")
@@ -30,3 +36,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
+
+[connection signal="pressed" from="CanvasLayer/MenuInterface/Layout/Buttons/Play" to="." method="_on_play_pressed"]
+
+[editable path="CanvasLayer/MenuInterface"]

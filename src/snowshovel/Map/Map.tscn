@@ -107,16 +107,16 @@ texture = ExtResource("4_rd3qs")
 unique_name_in_owner = true
 show_behind_parent = true
 texture_filter = 1
-position = Vector2(3.01992e-07, 3)
+position = Vector2(3.01992e-07, 1)
 texture = ExtResource("5_jn5r2")
-offset = Vector2(-1.90735e-06, -3)
+offset = Vector2(-1.90735e-06, -4)
 
 [node name="AccumulationLeftMask" type="Sprite2D" parent="SnowHeightMap/SnowHeightMaskOffset/SnowPlayerMask/ShovelRoot/SnowShovelMask"]
 unique_name_in_owner = true
 self_modulate = Color(1, 1, 1, 0.215686)
 show_behind_parent = true
 texture_filter = 1
-position = Vector2(-8, 2)
+position = Vector2(-8, 1)
 texture = ExtResource("7_0d7ss")
 offset = Vector2(-1.90735e-06, -3)
 
@@ -125,11 +125,12 @@ unique_name_in_owner = true
 self_modulate = Color(1, 1, 1, 0.215686)
 show_behind_parent = true
 texture_filter = 1
-position = Vector2(8, 2)
+position = Vector2(8, 1)
 texture = ExtResource("7_0d7ss")
 offset = Vector2(-1.90735e-06, -3)
 
 [node name="HeightMapDebug" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="TextureRect" type="TextureRect" parent="HeightMapDebug"]
 custom_minimum_size = Vector2(200, 200)

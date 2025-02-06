@@ -1,0 +1,68 @@
+[gd_scene load_steps=6 format=3 uid="uid://kp1ijdewaisx"]
+
+[ext_resource type="Shader" path="res://Common/Assets/snow_falling.gdshader" id="1_48vfo"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_qf16r"]
+size = Vector2(10, 10)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pto5l"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_eeebe"]
+size = Vector3(20, 5, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uxgtu"]
+shader = ExtResource("1_48vfo")
+shader_parameter/spread = 0.5
+shader_parameter/size = 0.5
+shader_parameter/snow_color = Color(1, 1, 1, 1)
+shader_parameter/snow_transparency = 2.375e-08
+shader_parameter/speed = 0.5
+shader_parameter/wind = 0.0
+shader_parameter/num_of_layers = 2
+
+[node name="Menu" type="Node3D"]
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, -4.37114e-07, 1, 0, -10, -4.37114e-08, 0, 0, -44.4035)
+mesh = SubResource("QuadMesh_qf16r")
+
+[node name="House" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 5)
+material_override = SubResource("StandardMaterial3D_pto5l")
+size = Vector3(20, 10, 0.1)
+
+[node name="Window" type="CSGBox3D" parent="House"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.05, 0.5, 0)
+operation = 2
+size = Vector3(2, 3, 1)
+
+[node name="Window2" type="CSGBox3D" parent="House"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.05, 0.5, 0)
+operation = 2
+size = Vector3(2, 3, 1)
+
+[node name="Roof" type="MeshInstance3D" parent="House"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.39805, -0.127677)
+mesh = SubResource("PrismMesh_eeebe")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.979977, -0.0715919, 0.185795, 0, 0.933123, 0.359557, -0.199111, -0.352358, 0.914439, 1.15468, 3.59439, 7.04812)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.853232, -0.0755291, 0.516033, -0.300535, 0.737449, 0.604853, -0.426232, -0.671166, 0.606516, 14.8498, 12.1504, 0)
+shadow_enabled = true
+
+[node name="Interface" type="CanvasLayer" parent="."]
+
+[node name="Snowing" type="ColorRect" parent="Interface"]
+material = SubResource("ShaderMaterial_uxgtu")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorLimit" type="ColorRect" parent="Interface"]
+offset_right = 40.0
+offset_bottom = 40.0

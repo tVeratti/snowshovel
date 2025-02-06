@@ -15,7 +15,7 @@ var is_dumping:bool = false
 
 @onready var shovel_root:Node3D = %ShovelRoot
 @onready var shovel:Shovel = %Shovel
-@onready var camera:Camera3D = $Camera3D
+@onready var camera:PlayerCamera = $Camera3D
 @onready var controller:PlayerController = $PlayerController
 
 
@@ -24,6 +24,8 @@ func _ready() -> void:
 
 
 func _input(event):
+	var facing_with_camera:bool = global_basis.z.y - camera.global_basis.z.y < 10
+	#printt( global_basis.z,  camera.global_position.direction_to(global_position) )
 	if Input.is_action_just_pressed(PlayerActions.DUMP_RIGHT):
 		var direction: = Vector3.RIGHT if rotation_degrees.y > 0 else Vector3.LEFT
 		_start_dumping(direction)

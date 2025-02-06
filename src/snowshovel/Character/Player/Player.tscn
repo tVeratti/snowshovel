@@ -47,11 +47,11 @@ mesh = SubResource("ArrayMesh_fj1g1")
 surface_material_override/0 = SubResource("StandardMaterial3D_hwsa8")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.162256, 0)
 shape = SubResource("CapsuleShape3D_valxt")
 
 [node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("target")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 10)
-projection = 1
 current = true
 size = 13.0
 far = 500.0
