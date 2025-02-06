@@ -27,16 +27,21 @@ func _ready() -> void:
 
 
 func _input(event):
-	var facing_with_camera:bool = global_basis.z.y - camera.global_basis.z.y < 10
-	#printt( global_basis.z,  camera.global_position.direction_to(global_position) )
+	var camera_position_2D: = Vector2(camera.global_position.x, camera.global_position.z)
+	var player_position_2D = Vector2(global_position.x, global_position.z)
+	var direction_2D: = camera_position_2D.direction_to(player_position_2D)
+	var forward_2D: = Vector2(global_basis.z.x, global_basis.z.z)
+	
+	var facing_with_camera:bool = forward_2D.dot(direction_2D) < 0
+	
 	if Input.is_action_just_pressed(PlayerActions.SHOVEL_RIGHT):
-		shovel_side = Vector3.RIGHT
+		shovel_side = Vector3.RIGHT if facing_with_camera else Vector3.LEFT
 		_update_shovel_position()
 		#var direction: = Vector3.RIGHT if rotation_degrees.y > 0 else Vector3.LEFT
 		#_start_dumping(direction)
 	
 	if Input.is_action_just_pressed(PlayerActions.SHOVEL_LEFT):
-		shovel_side = Vector3.LEFT
+		shovel_side = Vector3.LEFT if facing_with_camera else Vector3.RIGHT
 		_update_shovel_position()
 		#var direction: = Vector3.LEFT if rotation_degrees.y > 0 else Vector3.RIGHT
 		#_start_dumping(direction)
