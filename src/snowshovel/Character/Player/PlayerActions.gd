@@ -13,5 +13,6 @@ const RIGHT:String = "right"
 
 
 const SHOVEL:String = "shovel"
-const DUMP_LEFT:String = "dump_left"
-const DUMP_RIGHT:String = "dump_right"
+const SHOVEL_LEFT:String = "shovel_left"
+const SHOVEL_RIGHT:String = "shovel_right"
+const DUMP:String = "dump"

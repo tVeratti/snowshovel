@@ -8,9 +8,12 @@ signal start_shovel()
 signal end_shovel()
 signal dump_shovel(direction)
 
+const SIDE_OFFSET:float = 0.6
+
 
 var is_shoveling:bool = false
 var is_dumping:bool = false
+var shovel_side:Vector3 = Vector3.LEFT
 
 
 @onready var shovel_root:Node3D = %ShovelRoot
@@ -26,19 +29,26 @@ func _ready() -> void:
 func _input(event):
 	var facing_with_camera:bool = global_basis.z.y - camera.global_basis.z.y < 10
 	#printt( global_basis.z,  camera.global_position.direction_to(global_position) )
-	if Input.is_action_just_pressed(PlayerActions.DUMP_RIGHT):
-		var direction: = Vector3.RIGHT if rotation_degrees.y > 0 else Vector3.LEFT
-		_start_dumping(direction)
+	if Input.is_action_just_pressed(PlayerActions.SHOVEL_RIGHT):
+		shovel_side = Vector3.RIGHT
+		_update_shovel_position()
+		#var direction: = Vector3.RIGHT if rotation_degrees.y > 0 else Vector3.LEFT
+		#_start_dumping(direction)
 	
-	if Input.is_action_just_pressed(PlayerActions.DUMP_LEFT):
-		var direction: = Vector3.LEFT if rotation_degrees.y > 0 else Vector3.RIGHT
-		_start_dumping(direction)
+	if Input.is_action_just_pressed(PlayerActions.SHOVEL_LEFT):
+		shovel_side = Vector3.LEFT
+		_update_shovel_position()
+		#var direction: = Vector3.LEFT if rotation_degrees.y > 0 else Vector3.RIGHT
+		#_start_dumping(direction)
 	
 	if Input.is_action_just_pressed(PlayerActions.SHOVEL):
 		_start_shoveling()
 	
 	if Input.is_action_just_released(PlayerActions.SHOVEL):
 		_end_shoveling()
+	
+	if Input.is_action_just_pressed(PlayerActions.DUMP):
+		_start_dumping()
 
 
 func _physics_process(delta):
@@ -52,6 +62,10 @@ func _physics_process(delta):
 		look_at(global_position - horizontal_velocity)
 	
 	move_and_slide()
+
+
+func _update_shovel_position() -> void:
+	shovel_root.position.x = shovel_side.x * SIDE_OFFSET
 
 
 func _start_shoveling() -> void:
@@ -69,9 +83,9 @@ func _end_shoveling() -> void:
 	end_shovel.emit()
 
 
-func _start_dumping(direction:Vector3) -> void:
+func _start_dumping() -> void:
 	is_dumping = true
-	dump_shovel.emit(direction)
+	dump_shovel.emit(shovel_side)
 
 
 func _on_dump_complete() -> void:

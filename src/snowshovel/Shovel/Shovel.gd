@@ -15,6 +15,7 @@ signal dump_completed()
 
 @onready var player:Player = get_parent().get_parent()
 @onready var dump_timer:Timer = %DumpTimer
+@onready var animations:AnimationPlayer = $AnimationPlayer
 
 
 var is_on_snow:bool = false
@@ -54,6 +55,10 @@ func _on_snow_shovel_exited() -> void:
 
 func _on_shovel_dumped(direction:Vector3) -> void:
 	if not dump_timer.is_stopped(): return
+	match(player.shovel_side):
+		Vector3.LEFT: animations.play("DumpRight")
+		Vector3.RIGHT: animations.play("DumpLeft")
+	
 	dump_timer.start(dump_duration)
 	dump_started.emit(direction)
 
