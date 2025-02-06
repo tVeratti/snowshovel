@@ -141,12 +141,24 @@ texture = SubResource("ViewportTexture_ehdsw")
 expand_mode = 2
 
 [node name="Tree" parent="." instance=ExtResource("9_6gbet")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.3587, 0, -25.8384)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.3587, 0, -16.4009)
 
 [node name="Tree2" parent="." instance=ExtResource("9_6gbet")]
-transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -41.3492, 0.221306, -18.5117)
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -41.3492, 0.221306, -13.9627)
+
+[node name="Tree3" parent="." instance=ExtResource("9_6gbet")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -10.8481, 0.221306, -35.5779)
 
 [node name="Houses" type="Node3D" parent="."]
 
 [node name="House" parent="Houses" instance=ExtResource("10_srtwq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.2842, 0.954332, -50.7495)
+transform = Transform3D(-0.751264, 0, -0.660002, 0, 1, 0, 0.660002, 0, -0.751264, -41.3833, 0.954332, -50.1699)
+
+[node name="House2" parent="Houses" instance=ExtResource("10_srtwq")]
+transform = Transform3D(0.0296662, 0, 0.99956, 0, 1, 0, -0.99956, 0, 0.0296662, 47.5285, 0.954332, -3.26917)
+
+[node name="House3" parent="Houses" instance=ExtResource("10_srtwq")]
+transform = Transform3D(-0.876307, 0, 0.481754, 0, 1, 0, -0.481754, 0, -0.876307, 31.0564, 0.954332, -51.3746)
+
+[node name="House4" parent="Houses" instance=ExtResource("10_srtwq")]
+transform = Transform3D(0.130526, 0, -0.991445, 0, 1, 0, 0.991445, 0, 0.130526, -54.1479, 0.954332, 2.55584)
