@@ -16,6 +16,7 @@ signal dump_completed()
 @onready var player:Player = get_parent().get_parent()
 @onready var dump_timer:Timer = %DumpTimer
 @onready var animations:AnimationPlayer = $AnimationPlayer
+@onready var accumulation_mesh:MeshInstance3D = %SnowAccumulation
 
 
 var is_on_snow:bool = false

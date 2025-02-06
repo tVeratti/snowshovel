@@ -142,6 +142,7 @@ func _on_dump_shovel_started(direction:Vector3) -> void:
 	# Flash the current accumulation BLACK in order to clear it out
 	snow_shovel_mask.show()
 	var saved_accumulation:float = average_shovel_height
+	print(average_shovel_height)
 	
 	await get_tree().create_timer(player.shovel.dump_duration * 0.1).timeout
 	
