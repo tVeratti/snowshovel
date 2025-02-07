@@ -70,7 +70,16 @@ func _physics_process(delta):
 
 
 func _update_shovel_position() -> void:
-	shovel_root.position.x = shovel_side.x * SIDE_OFFSET
+	var target_x: = shovel_side.x * SIDE_OFFSET
+	var mid_point: = Vector3(target_x / 2.0, 0.5, 0)
+	var end_point: = Vector3(target_x, 0.0, 0)
+	var tween: = get_tree().create_tween()
+	tween.set_ease(Tween.EASE_OUT)
+	tween.set_trans(Tween.TRANS_QUART)
+	tween.tween_property(shovel, "rotation:x", deg_to_rad(30), 0.25)
+	tween.parallel().tween_property(shovel_root, "position", mid_point, 0.3)
+	tween.tween_property(shovel_root, "position", end_point, 0.3)
+	tween.parallel().tween_property(shovel, "rotation:x", 0, 0.25)
 
 
 func _start_shoveling() -> void:
