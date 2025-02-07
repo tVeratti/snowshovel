@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://dmdevl1o02m3"]
 
-[ext_resource type="FontFile" uid="uid://04blptc7nwbd" path="res://Common/Assets/Sunshiney-Regular.ttf" id="1_ntd35"]
+[ext_resource type="FontFile" uid="uid://ccyaqwbblu026" path="res://Common/Assets/CherryBombOne-Regular.ttf" id="1_h0uxf"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_l3pu4"]
-font = ExtResource("1_ntd35")
+font = ExtResource("1_h0uxf")
 font_size = 200
 font_color = Color(0, 0, 0, 1)
 outline_size = 10
@@ -40,6 +40,7 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 
 [node name="Play" type="Button" parent="Layout/MarginContainer/Buttons"]
+custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 text = "Play"
 

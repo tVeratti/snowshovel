@@ -40,8 +40,8 @@ _surfaces = [{
 [sub_resource type="BoxMesh" id="BoxMesh_qevug"]
 size = Vector3(0.5, 0.855, 0.225)
 
-[sub_resource type="Animation" id="Animation_01hxs"]
-length = 0.001
+[sub_resource type="Animation" id="Animation_kx4jb"]
+resource_name = "DumpLeft"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -49,10 +49,10 @@ tracks/0/path = NodePath("Shovel:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(-0.00833333, 0.3, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1.07177, 0.241484),
 "update": 0,
-"values": [Vector3(0, 0, 0.180435)]
+"values": [Vector3(0, 0, 0.180435), Vector3(0, 0, 0.842173), Vector3(0, 0.4, 0.18), Vector3(0, 0, 0.180435)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -61,10 +61,10 @@ tracks/1/path = NodePath("Shovel:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(-0.00833333, 0.3, 0.5, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 0.482968, 1, 0.241484),
 "update": 0,
-"values": [Vector3(-0.698132, 0, 0)]
+"values": [Vector3(-0.698132, 0, 0), Vector3(-1.23395, 0, 0), Vector3(-1.23395, 0, 0), Vector3(0.0673421, 1.5941, -1.08964), Vector3(-0.698132, 0, 0)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -73,22 +73,22 @@ tracks/2/path = NodePath("Shovel/SnowAccumulation:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.3, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector3(0, -0.0685117, 0.11732)]
+"values": [Vector3(0, -0.518453, 0.123279), Vector3(0, 0.000332177, 0.136649), Vector3(0, -0.0685117, 0.11732)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
-tracks/3/enabled = true
+tracks/3/enabled = false
 tracks/3/path = NodePath("Shovel/SnowAccumulation:scale")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector3(1, 1, 1)]
+"values": [Vector3(1, 1, 1), Vector3(1, 1, 1)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -97,10 +97,10 @@ tracks/4/path = NodePath("Shovel/SnowAccumulation:visible")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [false]
+"values": [true, false]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -109,10 +109,10 @@ tracks/5/path = NodePath("Shovel/SnowAccumulation:rotation")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector3(0.0352798, -0.0394331, 1.56278)]
+"values": [Vector3(0.0352798, -0.0394331, 1.56278), Vector3(0.0219577, -0.0276037, 1.5617)]
 }
 
 [sub_resource type="Animation" id="Animation_3oxu0"]
@@ -190,8 +190,8 @@ tracks/5/keys = {
 "values": [Vector3(0.0352798, -0.0394331, 1.56278)]
 }
 
-[sub_resource type="Animation" id="Animation_kx4jb"]
-resource_name = "DumpLeft"
+[sub_resource type="Animation" id="Animation_01hxs"]
+length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -199,10 +199,10 @@ tracks/0/path = NodePath("Shovel:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(-0.00833333, 0.3, 0.5, 1),
-"transitions": PackedFloat32Array(1, 1, 1.07177, 0.241484),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(0, 0, 0.180435), Vector3(0, 0, 0.842173), Vector3(0, 0.4, 0.18), Vector3(0, 0, 0.180435)]
+"values": [Vector3(0, 0, 0.180435)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -211,10 +211,10 @@ tracks/1/path = NodePath("Shovel:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(-0.00833333, 0.3, 0.5, 0.8, 1),
-"transitions": PackedFloat32Array(1, 1, 0.482968, 1, 0.241484),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(-0.698132, 0, 0), Vector3(-1.23395, 0, 0), Vector3(-1.23395, 0, 0), Vector3(0.0673421, 1.5941, -1.08964), Vector3(-0.698132, 0, 0)]
+"values": [Vector3(-0.698132, 0, 0)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -223,22 +223,22 @@ tracks/2/path = NodePath("Shovel/SnowAccumulation:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.3, 0.7),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(0, -0.518453, 0.123279), Vector3(0, 0.000332177, 0.136649), Vector3(0, -0.0685117, 0.11732)]
+"values": [Vector3(0, -0.0685117, 0.11732)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
-tracks/3/enabled = false
+tracks/3/enabled = true
 tracks/3/path = NodePath("Shovel/SnowAccumulation:scale")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.7),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(1, 1, 1), Vector3(1, 1, 1)]
+"values": [Vector3(1, 1, 1)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -247,10 +247,10 @@ tracks/4/path = NodePath("Shovel/SnowAccumulation:visible")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.7),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [true, false]
+"values": [false]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -259,10 +259,10 @@ tracks/5/path = NodePath("Shovel/SnowAccumulation:rotation")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(0.0352798, -0.0394331, 1.56278), Vector3(0.0219577, -0.0276037, 1.5617)]
+"values": [Vector3(0.0352798, -0.0394331, 1.56278)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_gknrh"]
@@ -296,7 +296,7 @@ mesh = SubResource("ArrayMesh_o5hal")
 
 [node name="SnowAccumulation" type="MeshInstance3D" parent="Shovel"]
 unique_name_in_owner = true
-transform = Transform3D(0.00661472, -0.999202, -0.0393984, 0.999346, 0.00800647, -0.0352726, 0.0355598, -0.0391393, 0.998602, 0, -0.0685117, 0.11732)
+transform = Transform3D(0.00661949, -0.999202, -0.0393983, 0.999346, 0.00801123, -0.0352725, 0.03556, -0.0391391, 0.998601, 0, -0.0685117, 0.11732)
 visible = false
 material_override = ExtResource("3_tupjl")
 mesh = SubResource("BoxMesh_qevug")
