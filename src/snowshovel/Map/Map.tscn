@@ -88,18 +88,16 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 self_modulate = Color(0, 0, 0, 0)
 texture_filter = 1
-position = Vector2(32, 27)
 texture = ExtResource("5_jcufa")
 
 [node name="ShovelRoot" type="Node2D" parent="SnowHeightMap/SnowHeightMaskOffset/SnowPlayerMask"]
 unique_name_in_owner = true
-position = Vector2(28, 8)
 
 [node name="SnowShovelMask" type="Sprite2D" parent="SnowHeightMap/SnowHeightMaskOffset/SnowPlayerMask/ShovelRoot"]
 unique_name_in_owner = true
 self_modulate = Color(0, 0, 0, 1)
 texture_filter = 1
-position = Vector2(0, -6)
+position = Vector2(0, -4)
 texture = ExtResource("4_rd3qs")
 
 [node name="AccumulationFrontMask" type="Sprite2D" parent="SnowHeightMap/SnowHeightMaskOffset/SnowPlayerMask/ShovelRoot/SnowShovelMask"]

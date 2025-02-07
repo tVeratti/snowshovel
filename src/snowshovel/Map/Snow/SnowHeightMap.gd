@@ -1,7 +1,7 @@
 extends SubViewport
 
 ## Number of pixels to lookahead of shovel mask for snow level.
-const SHOVEL_FORWARD_OFFSET:float = 6
+const SHOVEL_FORWARD_OFFSET:float = 8
 const SHOVEL_SIDE_OFFSET:float = 14
 
 @export var snow_mesh:MeshInstance3D
@@ -88,38 +88,30 @@ func _check_shovel_pixel(mask:Image, shovel_position:Vector2) -> void:
 	# Get the average pixel color in front of the shovel.
 	var degrees:float = deg_to_rad(snow_player_mask.rotation_degrees)
 	var forward_offset: = Vector2.UP.rotated(degrees) * SHOVEL_FORWARD_OFFSET
-	var average_height:float = _get_average_height(mask, snow_shovel_mask, forward_offset)
+	var average_height:float = _get_average_height(mask, snow_shovel_mask,  Vector2.UP * SHOVEL_FORWARD_OFFSET)
 	
 	var previous_height:float = average_shovel_height
 	average_shovel_height = average_height
 	
 	var distance_moved: = shovel_position - previous_shovel_position
-	var height_changed: = average_height - previous_height
-	
-	# How much snow was pushed?
-	#distance_moved
 	
 	# Only update shovel mask if the character is actively shoveling.
 	var velocity_2D: = _translate_position(player.velocity).normalized()
 	var shovel_direction: = _translate_position(player.global_position).direction_to(shovel_position)
 	var moving_in_shovel_direction: = velocity_2D.dot(shovel_direction)
 	if player.is_shoveling and not distance_moved.is_zero_approx() and moving_in_shovel_direction >= 0:
-		pass
-		#snow_shovel_mask.show()
-		#
-		#if not player.is_dumping:
-			#accumuluation_front_mask.modulate.a = 0.1 * player.shovel.accumulated_percentage
-			##accumuluation_front_mask.scale.y = 1 # + (1 * player.shovel.accumulated_percentage)
-			#
-			##if player.shovel.accumulated_percentage > 0.9:
-				##accumuluation_left_mask.modulate.a = 0.1 # left_pixel.r
-				##accumuluation_right_mask.modulate.a = 0.1 # right_pixel.r
-	#
-	#elif not player.is_dumping:
-		#snow_shovel_mask.hide()
+		snow_shovel_mask.show()
+		
+		if not player.is_dumping:
+			accumuluation_front_mask.show()
+			
+			var new_height = player.shovel.accumulated_percentage
+			accumuluation_front_mask.self_modulate = Color(new_height, new_height, new_height, 1)
 	
-	player.shovel.next_snow_height = average_shovel_height
+	elif not player.is_dumping:
+		snow_shovel_mask.hide()
 	
+	player.shovel.next_snow_height = average_shovel_height * distance_moved.length()
 	previous_shovel_position = shovel_position
 
 
