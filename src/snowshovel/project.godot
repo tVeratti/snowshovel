@@ -23,6 +23,7 @@ SnowManager="*res://Map/Snow/SnowManager.gd"
 
 player=""
 house=""
+pathway=""
 
 [input]
 

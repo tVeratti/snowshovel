@@ -3,6 +3,8 @@ extends SubViewport
 ## Number of pixels to lookahead of shovel mask for snow level.
 const SHOVEL_FORWARD_OFFSET:float = 8
 const SHOVEL_SIDE_OFFSET:float = 14
+const MAP_SCALE_MULTIPLIER:float = 10.0
+
 
 @export var snow_mesh:MeshInstance3D
 
@@ -42,6 +44,7 @@ func _ready():
 	reset_mask.hide()
 	
 	_register_houses()
+	_register_pathways()
 
 
 func _process(_delta):
@@ -49,7 +52,7 @@ func _process(_delta):
 	
 	var player_position:Vector2 = _translate_position(player.global_position)
 	snow_player_mask.position = player_position
-	var player_rotation = rad_to_deg(Vector2(player.basis.z.x, player.basis.z.z).angle()) + 90
+	var player_rotation = _translate_rotation(player)
 	snow_player_mask.rotation_degrees = player_rotation
 	_check_player_pixel(snow_mask_image, player_position)
 	
@@ -64,9 +67,13 @@ func _process(_delta):
 func _translate_position(position_3D:Vector3) -> Vector2:
 	var position_2D: = Vector2(
 		position_3D.x,
-		position_3D.z) * 10
+		position_3D.z) * MAP_SCALE_MULTIPLIER
 	
 	return position_2D
+
+
+func _translate_rotation(node_3D:Node3D) -> float:
+	return rad_to_deg(Vector2(node_3D.basis.z.x, node_3D.basis.z.z).angle()) + 90
 
 
 func _check_player_pixel(mask:Image, player_position:Vector2) -> void:
@@ -177,8 +184,34 @@ func _register_houses() -> void:
 	var houses = get_tree().get_nodes_in_group("house")
 	for house in houses:
 		var position:Vector2 = _translate_position(house.global_position)
-		var house_size:Vector2 = Vector2(20, 20)
+		var house_size:Vector2 = Vector2(22, 22) * MAP_SCALE_MULTIPLIER
+		var footprint:ColorRect = ColorRect.new()
+		footprint.custom_minimum_size = house_size 
+		footprint.color = Color.BLACK
+		footprint.pivot_offset = house_size / 2.0
+		footprint.position = position - footprint.pivot_offset
+		footprint.rotation_degrees = _translate_rotation(house)
+		snow_height_mask_offset.add_child(footprint)
+
+
+func _register_pathways() -> void:
+	var pathways = get_tree().get_nodes_in_group("pathway")
+	for pathway in pathways:
+		var csg:CSGPolygon3D = pathway.polygon
+		var position:Vector2 = _translate_position(csg.global_position)# Vector2(.x, csg.global_position.z)
 		
+		var offset_points:Array = []
+		for point in csg.polygon:
+			var offset_point:Vector2 = point * MAP_SCALE_MULTIPLIER
+			offset_points.append(offset_point)
+		
+		var footprint: = Polygon2D.new()
+		footprint.polygon = PackedVector2Array(offset_points)
+		footprint.color = Color(0.6, 0.6, 0.6, 1)
+		footprint.position = position
+		footprint.scale.y = -1
+		snow_height_mask_offset.add_child(footprint)
+
 
 func _reset_shovel_mask() -> void:
 	snow_shovel_mask.hide()

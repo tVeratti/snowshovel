@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://bmgi2w1hmbc3p"]
+
+[ext_resource type="Script" path="res://Pathways/Pathway.gd" id="1_j2rnd"]
+
+[node name="Pathway" type="Node3D" groups=["pathway"]]
+script = ExtResource("1_j2rnd")
+
+[node name="ShovelArea3D" type="Area3D" parent="."]
+unique_name_in_owner = true
+
+[node name="CollisionPolygon3D" type="CollisionPolygon3D" parent="ShovelArea3D"]

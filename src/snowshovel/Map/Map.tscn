@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://cigxkdnca66xs"]
+[gd_scene load_steps=20 format=3 uid="uid://cigxkdnca66xs"]
 
 [ext_resource type="Texture2D" uid="uid://c51rittgomagk" path="res://Map/Assets/texture_08.png" id="1_2mywy"]
 [ext_resource type="Shader" path="res://Common/Assets/vertex_height.gdshader" id="2_0xqjm"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://cgwmsq0oj31h6" path="res://Map/Assets/player_mask.png" id="5_jcufa"]
 [ext_resource type="Texture2D" uid="uid://cylst182ka7wr" path="res://Map/Assets/accumulation_mask_solid.png" id="5_jn5r2"]
 [ext_resource type="PackedScene" uid="uid://cb82ofcdmeaj6" path="res://Obstacle/Tree.tscn" id="9_6gbet"]
+[ext_resource type="PackedScene" uid="uid://bmgi2w1hmbc3p" path="res://Pathways/Pathway.tscn" id="10_so1lw"]
 [ext_resource type="PackedScene" uid="uid://dkaofpxf1nhwl" path="res://Obstacle/House.tscn" id="10_srtwq"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_y64qh"]
@@ -147,3 +148,37 @@ transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -41.3492, 0.221306, -13
 
 [node name="Tree3" parent="Trees" instance=ExtResource("9_6gbet")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -10.8481, 0.221306, -35.5779)
+
+[node name="Pathways" type="Node3D" parent="."]
+
+[node name="Pathway" parent="Pathways" node_paths=PackedStringArray("polygon") instance=ExtResource("10_so1lw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.729, 0.769291, -8.32559)
+polygon = NodePath("CSGPolygon3D2")
+
+[node name="CSGPolygon3D2" type="CSGPolygon3D" parent="Pathways/Pathway"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+polygon = PackedVector2Array(14.5949, 3.571, 14.3781, -4.54506, 10.3633, -3.55547, 6.48586, -2.97747, 2.92154, -3.31463, 1.69329, -4.18163, -0.377865, 2.12818, 1.59696, 2.94701, 6.02828, 3.76584, 10.6523, 3.64543)
+
+[node name="Pathway2" parent="Pathways" node_paths=PackedStringArray("polygon") instance=ExtResource("10_so1lw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.6504, 0.769291, -22.7069)
+polygon = NodePath("CSGPolygon3D2")
+
+[node name="CSGPolygon3D2" type="CSGPolygon3D" parent="Pathways/Pathway2"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+polygon = PackedVector2Array(-4.74419, 2.13121, -5.14535, 11.358, -1.62401, 17.8658, 8.00395, 23.4821, 14.9129, 19.6042, 5.77525, 13.3193, 2.9671, 8.28241, 3.76943, -1.88044)
+
+[node name="Pathway3" parent="Pathways" node_paths=PackedStringArray("polygon") instance=ExtResource("10_so1lw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.9409, 0.769291, -17.9276)
+polygon = NodePath("CSGPolygon3D2")
+
+[node name="CSGPolygon3D2" type="CSGPolygon3D" parent="Pathways/Pathway3"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+polygon = PackedVector2Array(-3.05889, -5.53379, -14.2029, 5.87309, -21.8251, 18.857, -15.7274, 23.8508, -5.58208, 13.4426, 5.50941, 3.56018)
+
+[node name="Pathway4" parent="Pathways" node_paths=PackedStringArray("polygon") instance=ExtResource("10_so1lw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.9409, 0.769291, 10.2298)
+polygon = NodePath("CSGPolygon3D2")
+
+[node name="CSGPolygon3D2" type="CSGPolygon3D" parent="Pathways/Pathway4"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+polygon = PackedVector2Array(-4.08978, 2.2354, -15.7935, 1.31746, -23.9402, 0.743751, -24.3992, 7.85778, -15.4493, 10.6116, -5.92567, 12.3327)

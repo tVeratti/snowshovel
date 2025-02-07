@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=4 uid="uid://dkaofpxf1nhwl"]
+[gd_scene load_steps=10 format=4 uid="uid://dkaofpxf1nhwl"]
 
 [ext_resource type="Material" uid="uid://1goorvrk4pcf" path="res://Common/object_dark_material.tres" id="1_gbnx8"]
 [ext_resource type="Material" uid="uid://bg6c61rm7s8wd" path="res://Common/outline_unshaded_material.tres" id="1_na2lk"]
@@ -55,9 +55,6 @@ _surfaces = [{
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_386l4"]
 points = PackedVector3Array(-10, -5, -10, -10, 5, -10, 10, -5, -10, -10, -5, 10, -10, 5, 10, 10, 5, -10, 10, -5, 10, 10, 5, 10)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_1ulo5"]
-size = Vector3(22, 1, 22)
-
 [node name="House" type="StaticBody3D" groups=["house"]]
 
 [node name="House" type="MeshInstance3D" parent="."]
@@ -79,7 +76,7 @@ material_override = ExtResource("1_na2lk")
 mesh = SubResource("ArrayMesh_rr5e0")
 
 [node name="Garage" type="MeshInstance3D" parent="House"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.45317, -2.5656, -10.141)
+transform = Transform3D(1, 0, 0, 0, 0.762375, -0.647136, 0, 0.647136, 0.762375, 4.45317, -2.5656, -10.4329)
 mesh = SubResource("BoxMesh_4xaii")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="House/Garage"]
@@ -89,8 +86,3 @@ mesh = SubResource("ArrayMesh_1jkta")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.92399, 0)
 shape = SubResource("ConvexPolygonShape3D_386l4")
-
-[node name="NoShovel" type="Area3D" parent="."]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NoShovel"]
-shape = SubResource("BoxShape3D_1ulo5")

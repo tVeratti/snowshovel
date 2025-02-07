@@ -5,20 +5,7 @@
 [ext_resource type="Material" uid="uid://bg6c61rm7s8wd" path="res://Common/outline_unshaded_material.tres" id="3_tupjl"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_lcg6t"]
-size = Vector3(1, 0.5, 0.1)
-
-[sub_resource type="ArrayMesh" id="ArrayMesh_01yjc"]
-_surfaces = [{
-"aabb": AABB(-0.528867, -0.278868, -0.0788675, 1.05773, 0.557735, 0.157735),
-"attribute_data": PackedByteArray("AAAAAAAAAACrqio/AAAAAKuqqj4AAAAAAACAPwAAAAAAAAAAAAAAP6uqKj8AAAA/q6qqPgAAAD8AAIA/AAAAP6uqqj4AAAAAAAAAAAAAAD+rqio/AAAAAKuqqj4AAAA/q6qqPgAAAD8AAAAAAACAP6uqKj8AAAA/q6qqPgAAgD+rqqo+AAAAP6uqKj8AAAA/q6oqPwAAAD8AAIA/AAAAP6uqqj4AAIA/q6oqPwAAgD+rqio/AACAPwAAgD8AAIA/"),
-"format": 34359742487,
-"index_count": 36,
-"index_data": PackedByteArray("AAAEAAIAAgAEAAYAAQAFAAMAAwAFAAcACAAMAAoACgAMAA4ACQANAAsACwANAA8AEAAUABIAEgAUABYAEQAVABMAEwAVABcA"),
-"primitive": 3,
-"uv_scale": Vector4(0, 0, 0, 0),
-"vertex_count": 24,
-"vertex_data": PackedByteArray("3GMHv7nHjj5KhaE93GMHP7nHjj5KhaG93GMHP7nHjj5KhaE93GMHv7nHjj5KhaG93GMHv7nHjr5KhaE93GMHP7nHjr5KhaG93GMHP7nHjr5KhaE93GMHv7nHjr5KhaG93GMHP7nHjj5KhaE93GMHv7nHjj5KhaG93GMHP7nHjj5KhaG93GMHv7nHjj5KhaE93GMHP7nHjr5KhaE93GMHv7nHjr5KhaG93GMHP7nHjr5KhaG93GMHv7nHjr5KhaE93GMHP7nHjj5KhaE93GMHv7nHjr5KhaE93GMHv7nHjj5KhaE93GMHP7nHjr5KhaE93GMHP7nHjj5KhaG93GMHv7nHjr5KhaG93GMHv7nHjj5KhaG93GMHP7nHjr5KhaG9/3//f////7//////AAD/v/9//3////+//////wAA/7//f/9/////v/////8AAP+//3//f////7//////AAD/v///AID/////AAAAgP9//7///wCA/////wAAAID/f/+///8AgP////8AAACA/3//v///AID/////AAAAgP9//78AgP//AAD/vwCAAAD///+/AID//wAA/78AgAAA////vwCA//8AAP+/AIAAAP///78AgP//AAD/vwCAAAD///+/")
-}]
+size = Vector3(1.2, 0.5, 0.1)
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_u1t1s"]
 top_radius = 0.04
@@ -39,6 +26,19 @@ _surfaces = [{
 
 [sub_resource type="BoxMesh" id="BoxMesh_qevug"]
 size = Vector3(0.5, 0.855, 0.225)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_kur2u"]
+_surfaces = [{
+"aabb": AABB(-0.628868, -0.278868, -0.0788675, 1.25774, 0.557735, 0.157735),
+"attribute_data": PackedByteArray("AAAAAAAAAACrqio/AAAAAKuqqj4AAAAAAACAPwAAAAAAAAAAAAAAP6uqKj8AAAA/q6qqPgAAAD8AAIA/AAAAP6uqqj4AAAAAAAAAAAAAAD+rqio/AAAAAKuqqj4AAAA/q6qqPgAAAD8AAAAAAACAP6uqKj8AAAA/q6qqPgAAgD+rqqo+AAAAP6uqKj8AAAA/q6oqPwAAAD8AAIA/AAAAP6uqqj4AAIA/q6oqPwAAgD+rqio/AACAPwAAgD8AAIA/"),
+"format": 34359742487,
+"index_count": 36,
+"index_data": PackedByteArray("AAAEAAIAAgAEAAYAAQAFAAMAAwAFAAcACAAMAAoACgAMAA4ACQANAAsACwANAA8AEAAUABIAEgAUABYAEQAVABMAEwAVABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("dv0gv7nHjj5KhaE9dv0gP7nHjj5KhaG9dv0gP7nHjj5KhaE9dv0gv7nHjj5KhaG9dv0gv7nHjr5KhaE9dv0gP7nHjr5KhaG9dv0gP7nHjr5KhaE9dv0gv7nHjr5KhaG9dv0gP7nHjj5KhaE9dv0gv7nHjj5KhaG9dv0gP7nHjj5KhaG9dv0gv7nHjj5KhaE9dv0gP7nHjr5KhaE9dv0gv7nHjr5KhaG9dv0gP7nHjr5KhaG9dv0gv7nHjr5KhaE9dv0gP7nHjj5KhaE9dv0gv7nHjr5KhaE9dv0gv7nHjj5KhaE9dv0gP7nHjr5KhaE9dv0gP7nHjj5KhaG9dv0gv7nHjr5KhaG9dv0gv7nHjj5KhaG9dv0gP7nHjr5KhaG9/3//f////7//////AAD/v/9//3////+//////wAA/7//f/9/////v/////8AAP+//3//f////7//////AAD/v///AID/////AAAAgP9//7///wCA/////wAAAID/f/+///8AgP////8AAACA/3//v///AID/////AAAAgP9//78AgP//AAD/vwCAAAD///+/AID//wAA/78AgAAA////vwCA//8AAP+/AIAAAP///78AgP//AAD/vwCAAAD///+/")
+}]
 
 [sub_resource type="Animation" id="Animation_kx4jb"]
 resource_name = "DumpLeft"
@@ -281,12 +281,8 @@ material_override = ExtResource("2_kc1l0")
 mesh = SubResource("BoxMesh_lcg6t")
 skeleton = NodePath("../..")
 
-[node name="Outline" type="MeshInstance3D" parent="Shovel"]
-material_override = ExtResource("3_tupjl")
-mesh = SubResource("ArrayMesh_01yjc")
-
 [node name="Handle" type="MeshInstance3D" parent="Shovel"]
-transform = Transform3D(1, 0, 0, 0, 1, 2.98023e-08, 0, -2.98023e-08, 1, 0, 1.22355, -0.00593454)
+transform = Transform3D(1, 0, 0, 0, 1, 2.98023e-08, 0, -2.98023e-08, 1, 0, 1.2061, -0.0205731)
 material_override = ExtResource("2_kc1l0")
 mesh = SubResource("CylinderMesh_u1t1s")
 
@@ -300,6 +296,10 @@ transform = Transform3D(0.00661949, -0.999202, -0.0393983, 0.999346, 0.00801123,
 visible = false
 material_override = ExtResource("3_tupjl")
 mesh = SubResource("BoxMesh_qevug")
+
+[node name="Outline" type="MeshInstance3D" parent="Shovel"]
+material_override = ExtResource("3_tupjl")
+mesh = SubResource("ArrayMesh_kur2u")
 
 [node name="DumpTimer" type="Timer" parent="."]
 unique_name_in_owner = true
