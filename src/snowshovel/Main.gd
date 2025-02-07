@@ -33,12 +33,16 @@ func _on_play_pressed() -> void:
 	play_button.hide()
 	quit_button.hide()
 	
+	pause_player(false)
+	
 	var tween: = get_tree().create_tween()
+	tween.set_ease(Tween.EASE_OUT)
+	tween.set_trans(Tween.TRANS_CUBIC)
 	tween.tween_property(menu, "position", Vector2(-999, 0), PLAY_ANIMATION_DURATION) 
 	tween.parallel().tween_property(camera, "offset_override", Vector3.ZERO, PLAY_ANIMATION_DURATION)
 	#tween.parallel().tween_property(camera, "fov", 75, PLAY_ANIMATION_DURATION)
 	tween.tween_callback(func():
-		pause_player(false)
+		
 		menu.queue_free())
 
 

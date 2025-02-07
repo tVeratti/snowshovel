@@ -37,14 +37,10 @@ func _input(event):
 	if Input.is_action_just_pressed(PlayerActions.SHOVEL_RIGHT):
 		shovel_side = Vector3.RIGHT if facing_with_camera else Vector3.LEFT
 		_update_shovel_position()
-		#var direction: = Vector3.RIGHT if rotation_degrees.y > 0 else Vector3.LEFT
-		#_start_dumping(direction)
 	
 	if Input.is_action_just_pressed(PlayerActions.SHOVEL_LEFT):
 		shovel_side = Vector3.LEFT if facing_with_camera else Vector3.RIGHT
 		_update_shovel_position()
-		#var direction: = Vector3.LEFT if rotation_degrees.y > 0 else Vector3.RIGHT
-		#_start_dumping(direction)
 	
 	if Input.is_action_just_pressed(PlayerActions.SHOVEL):
 		_start_shoveling()
@@ -71,6 +67,8 @@ func _physics_process(delta):
 
 func _update_shovel_position() -> void:
 	var target_x: = shovel_side.x * SIDE_OFFSET
+	if abs(target_x - shovel_root.position.x) < 0.1: return
+	
 	var mid_point: = Vector3(target_x / 2.0, 0.5, 0)
 	var end_point: = Vector3(target_x, 0.0, 0)
 	var tween: = get_tree().create_tween()

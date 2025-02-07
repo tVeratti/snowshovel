@@ -22,6 +22,7 @@ SnowManager="*res://Map/Snow/SnowManager.gd"
 [global_group]
 
 player=""
+house=""
 
 [input]
 

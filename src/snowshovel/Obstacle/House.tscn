@@ -58,7 +58,7 @@ points = PackedVector3Array(-10, -5, -10, -10, 5, -10, 10, -5, -10, -10, -5, 10,
 [sub_resource type="BoxShape3D" id="BoxShape3D_1ulo5"]
 size = Vector3(22, 1, 22)
 
-[node name="House" type="StaticBody3D"]
+[node name="House" type="StaticBody3D" groups=["house"]]
 
 [node name="House" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.92399, 0)

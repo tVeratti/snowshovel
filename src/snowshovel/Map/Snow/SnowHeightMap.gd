@@ -40,6 +40,8 @@ func _ready():
 	reset_mask.show()
 	await get_tree().create_timer(1).timeout
 	reset_mask.hide()
+	
+	_register_houses()
 
 
 func _process(_delta):
@@ -170,6 +172,13 @@ func _on_dump_shovel_started(direction:Vector3) -> void:
 func _on_dump_shovel_completed() -> void:
 	pass
 
+
+func _register_houses() -> void:
+	var houses = get_tree().get_nodes_in_group("house")
+	for house in houses:
+		var position:Vector2 = _translate_position(house.global_position)
+		var house_size:Vector2 = Vector2(20, 20)
+		
 
 func _reset_shovel_mask() -> void:
 	snow_shovel_mask.hide()
