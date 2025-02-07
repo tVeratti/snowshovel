@@ -32,13 +32,14 @@ func _ready():
 
 
 func _process(delta):
+	if player.is_dumping: return
+	
 	if player.is_shoveling:
 		var player_velocity: = Vector2(player.velocity.x, player.velocity.z).length()
 		if player_velocity > 0.1:
 			accumulated_snow = next_snow_height
 	else:
-		if dump_timer.is_stopped():
-			accumulated_snow = 0
+		accumulated_snow = 0
 	
 	if accumulated_snow == 0.0:
 		accumulated_percentage = 0.0
