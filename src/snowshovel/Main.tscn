@@ -17,7 +17,7 @@ shader_parameter/num_colors = 2
 script = ExtResource("1_hb5ac")
 
 [node name="Player" parent="." instance=ExtResource("1_x2dak")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.654, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.33164, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.771203, 0.63659, 0, -0.63659, 0.771203, 0, 10.6738, 5.97322)
@@ -31,7 +31,6 @@ unique_name_in_owner = true
 theme = ExtResource("5_2n45u")
 
 [node name="ColorLimitScreenShader" type="ColorRect" parent="CanvasLayer"]
-visible = false
 material = SubResource("ShaderMaterial_cwn4b")
 anchors_preset = 15
 anchor_right = 1.0

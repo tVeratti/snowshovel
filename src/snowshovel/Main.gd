@@ -1,6 +1,6 @@
 extends Node3D
 
-const PLAY_ANIMATION_DURATION:float = 2.0
+const PLAY_ANIMATION_DURATION:float = 1.0
 
 
 @onready var player:Player = $Player
