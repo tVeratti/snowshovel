@@ -6,6 +6,22 @@ const SHOVEL_SIDE_OFFSET:float = 14
 const MAP_SCALE_MULTIPLIER:float = 10.0
 
 
+const DEFAULT_FULL_SNOW_HEIGHT:float = 0.8
+const DEFAULT_PATH_SNOW_HEIGHT:float = 0.4
+
+const DEFAULT_FULL_SNOW:Color = Color(
+	DEFAULT_FULL_SNOW_HEIGHT,
+	DEFAULT_FULL_SNOW_HEIGHT,
+	DEFAULT_FULL_SNOW_HEIGHT,
+	1)
+
+const DEFAULT_PATH_SNOW:Color = Color(
+	DEFAULT_PATH_SNOW_HEIGHT,
+	DEFAULT_PATH_SNOW_HEIGHT,
+	DEFAULT_PATH_SNOW_HEIGHT,
+	1)
+
+
 @export var snow_mesh:MeshInstance3D
 
 
@@ -28,6 +44,8 @@ var pre_dump_height:float
 
 @onready var snow_player_mask:Sprite2D = %SnowPlayerMask
 @onready var reset_mask:TextureRect = %ResetMask
+@onready var obstacles_root:Node2D = %Obstacles
+@onready var pathways_root:Node2D = %Pathways
 
 @onready var player:Player = get_tree().get_first_node_in_group("player")
 
@@ -39,12 +57,16 @@ func _ready():
 	player.shovel.dump_started.connect(_on_dump_shovel_started)
 	player.shovel.dump_completed.connect(_on_dump_shovel_completed)
 	
+	reset_mask.self_modulate = DEFAULT_FULL_SNOW
 	reset_mask.show()
-	await get_tree().create_timer(1).timeout
-	reset_mask.hide()
 	
 	_register_houses()
 	_register_pathways()
+	
+	await get_tree().create_timer(1).timeout
+	reset_mask.hide()
+	obstacles_root.hide()
+	pathways_root.hide()
 
 
 func _process(_delta):
@@ -187,11 +209,11 @@ func _register_houses() -> void:
 		var house_size:Vector2 = Vector2(22, 22) * MAP_SCALE_MULTIPLIER
 		var footprint:ColorRect = ColorRect.new()
 		footprint.custom_minimum_size = house_size 
-		footprint.color = Color.BLACK
+		footprint.color = DEFAULT_PATH_SNOW
 		footprint.pivot_offset = house_size / 2.0
 		footprint.position = position - footprint.pivot_offset
 		footprint.rotation_degrees = _translate_rotation(house)
-		snow_height_mask_offset.add_child(footprint)
+		obstacles_root.add_child(footprint)
 
 
 func _register_pathways() -> void:
@@ -207,10 +229,10 @@ func _register_pathways() -> void:
 		
 		var footprint: = Polygon2D.new()
 		footprint.polygon = PackedVector2Array(offset_points)
-		footprint.color = Color(0.6, 0.6, 0.6, 1)
+		footprint.color = DEFAULT_PATH_SNOW
 		footprint.position = position
 		footprint.scale.y = -1
-		snow_height_mask_offset.add_child(footprint)
+		pathways_root.add_child(footprint)
 
 
 func _reset_shovel_mask() -> void:

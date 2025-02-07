@@ -78,11 +78,18 @@ snow_mesh = NodePath("../Snow")
 
 [node name="ResetMask" type="TextureRect" parent="SnowHeightMap"]
 unique_name_in_owner = true
+visible = false
 offset_right = 1600.0
 offset_bottom = 1600.0
 texture = ExtResource("4_ky8tb")
 
 [node name="SnowHeightMaskOffset" type="Node2D" parent="SnowHeightMap"]
+unique_name_in_owner = true
+
+[node name="Obstacles" type="Node2D" parent="SnowHeightMap/SnowHeightMaskOffset"]
+unique_name_in_owner = true
+
+[node name="Pathways" type="Node2D" parent="SnowHeightMap/SnowHeightMaskOffset"]
 unique_name_in_owner = true
 
 [node name="SnowPlayerMask" type="Sprite2D" parent="SnowHeightMap/SnowHeightMaskOffset"]

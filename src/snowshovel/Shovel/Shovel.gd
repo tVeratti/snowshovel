@@ -9,7 +9,7 @@ signal dump_completed()
 
 
 @export var snow_per_second:float = 10.0
-@export var max_snow_accumulation:float = 1.0
+@export var max_snow_accumulation:float = 2.0
 @export var dump_duration:float = 1.0
 
 
@@ -35,7 +35,10 @@ func _process(delta):
 	if player.is_dumping: return
 	
 	if player.is_shoveling:
-		accumulated_snow += next_snow_height * 0.05
+		if next_snow_height > 0.2:
+			accumulated_snow += next_snow_height * 0.05
+		else:
+			accumulated_snow += next_snow_height
 	else:
 		accumulated_snow = 0
 	
