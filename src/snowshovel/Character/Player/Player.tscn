@@ -1,8 +1,10 @@
-[gd_scene load_steps=13 format=4 uid="uid://o7p2surfsx0u"]
+[gd_scene load_steps=18 format=4 uid="uid://o7p2surfsx0u"]
 
 [ext_resource type="Script" path="res://Character/Player/Player.gd" id="1_4soc0"]
+[ext_resource type="AudioStream" uid="uid://c24f2ocb0ipxu" path="res://Common/Assets/Sounds/player_step_01.wav" id="2_2mkko"]
 [ext_resource type="Script" path="res://Character/Player/PlayerController.gd" id="2_uw8rb"]
 [ext_resource type="Material" uid="uid://1goorvrk4pcf" path="res://Common/object_dark_material.tres" id="3_0w3mb"]
+[ext_resource type="AudioStream" uid="uid://m6tpqk4q27or" path="res://Common/Assets/Sounds/player_step_02.wav" id="3_eku5j"]
 [ext_resource type="Script" path="res://Character/Player/PlayerCamera.gd" id="3_t0d3t"]
 [ext_resource type="Material" uid="uid://bg6c61rm7s8wd" path="res://Common/outline_unshaded_material.tres" id="3_td7y4"]
 [ext_resource type="PackedScene" uid="uid://bsh613laee4iu" path="res://Shovel/Shovel.tscn" id="4_sokp6"]
@@ -29,28 +31,77 @@ _surfaces = [{
 [sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_2k14y"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_bjo2w"]
-graph_offset = Vector2(-165, 37)
 nodes/BlendSpace2D/node = SubResource("AnimationNodeBlendSpace2D_2k14y")
 nodes/BlendSpace2D/position = Vector2(74, 233)
 
+[sub_resource type="Animation" id="Animation_mvmm0"]
+resource_name = "Walk"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshRoot:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.266667, 0.5),
+"transitions": PackedFloat32Array(0.450625, 0.406126, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0.25, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_dspef"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshRoot:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_07fkp"]
+_data = {
+"RESET": SubResource("Animation_dspef"),
+"Walk": SubResource("Animation_mvmm0")
+}
+
 [node name="Player" type="CharacterBody3D" groups=["player"]]
 script = ExtResource("1_4soc0")
+step_audio = Array[AudioStream]([ExtResource("3_eku5j"), ExtResource("2_2mkko")])
 
 [node name="PlayerController" type="Node" parent="."]
 script = ExtResource("2_uw8rb")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="MeshRoot" type="Node3D" parent="."]
+unique_name_in_owner = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshRoot"]
 material_override = ExtResource("3_0w3mb")
 mesh = SubResource("CapsuleMesh_4kxwh")
+skeleton = NodePath("../..")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshInstance3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshRoot/MeshInstance3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.34, 0.5)
 visible = false
 mesh = SubResource("SphereMesh_h70nc")
 
-[node name="Outline" type="MeshInstance3D" parent="MeshInstance3D"]
+[node name="Outline" type="MeshInstance3D" parent="MeshRoot/MeshInstance3D"]
 mesh = SubResource("ArrayMesh_fj1g1")
 surface_material_override/0 = ExtResource("3_td7y4")
+
+[node name="ShovelRoot" type="Node3D" parent="MeshRoot"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, 0, 0)
+
+[node name="Shovel" parent="MeshRoot/ShovelRoot" instance=ExtResource("4_sokp6")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.458813, 0.707401)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.162256, 0)
@@ -63,14 +114,6 @@ size = 21.484
 far = 500.0
 script = ExtResource("3_t0d3t")
 target = NodePath("..")
-
-[node name="ShovelRoot" type="Node3D" parent="."]
-unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, 0, 0)
-
-[node name="Shovel" parent="ShovelRoot" instance=ExtResource("4_sokp6")]
-unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.458813, 0.707401)
 
 [node name="ShovelHoldLeft" type="Marker3D" parent="."]
 unique_name_in_owner = true
@@ -86,3 +129,12 @@ anim_player = NodePath("../AnimationPlayer")
 parameters/BlendSpace2D/blend_position = Vector2(0, 0)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_07fkp")
+}
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = 10.0
+max_polyphony = 2
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

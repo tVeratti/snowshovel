@@ -43,7 +43,7 @@ var current_pathway_polygon:Polygon2D
 @onready var accumuluation_front_mask:Sprite2D = %AccumulationFrontMask
 @onready var dump_receive_area:Sprite2D = %DumpReceiveArea
 
-
+@onready var player_root:Node2D = %PlayerRoot
 @onready var snow_player_mask:Sprite2D = %SnowPlayerMask
 @onready var reset_mask:TextureRect = %ResetMask
 @onready var obstacles_root:Node2D = %Obstacles
@@ -67,6 +67,7 @@ func _ready():
 	# Connect Signals
 	player.shovel.dump_started.connect(_on_dump_shovel_started)
 	player.shovel.dump_completed.connect(_on_dump_shovel_completed)
+	player.step.connect(_on_step_connect)
 	
 	PathwayManager.player_entered_pathway.connect(_on_player_entered_pathway)
 	PathwayManager.player_exited_pathway.connect(_on_player_exited_pathway)
@@ -82,9 +83,9 @@ func _process(_delta):
 	var snow_mask_image: = _get_mask_image()
 	
 	var player_position:Vector2 = _translate_position(player.global_position)
-	snow_player_mask.position = player_position
+	player_root.position = player_position
 	var player_rotation = _translate_rotation(player)
-	snow_player_mask.rotation_degrees = player_rotation
+	player_root.rotation_degrees = player_rotation
 	_check_player_pixel(snow_mask_image, player_position)
 	
 	var shovel_root_offset:Vector2 = _translate_position(player.shovel_root.position)
@@ -123,6 +124,7 @@ func _get_mask_image() -> Image:
 ## Check the current height of snow underneath player
 func _check_player_pixel(mask:Image, player_position:Vector2) -> void:
 	var player_pixel: = mask.get_pixelv(player_position + snow_height_mask_offset.position)
+	snow_player_mask.scale = (0.25 - player.mesh_root.position.y) * Vector2(4, 4)
 	
 	var is_on_snow:bool = player_pixel.r > 0
 	var is_previous_on_snow:bool = previous_player_pixel.r > 0
@@ -131,6 +133,7 @@ func _check_player_pixel(mask:Image, player_position:Vector2) -> void:
 	var did_exit_snow:bool = not is_on_snow and is_previous_on_snow
 	
 	previous_player_pixel = player_pixel
+	player.snow_height = player_pixel.r
 
 
 ## Check the current height of snow underneath shovel
@@ -309,6 +312,20 @@ func _on_player_exited_pathway(pathway:Pathway) -> void:
 
 
 #endregion
+
+
+func _on_step_connect() -> void:
+	pass
+	#snow_player_mask.self_modulate.a = 1.0
+	#snow_player_mask.scale = Vector2(2, 2)
+	#
+	#var tween: = get_tree().create_tween()
+	#tween.tween_property(snow_player_mask, "scale", Vector2(0.5, 0.5), 0.15)
+	#tween.tween_callback(func():
+		#snow_player_mask.self_modulate.a = 0.0
+		#snow_player_mask.scale.x = 1)
+	
+
 
 func _reset_shovel_mask() -> void:
 	snow_shovel_mask.hide()

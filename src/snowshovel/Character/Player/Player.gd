@@ -7,19 +7,27 @@ class_name Player
 signal start_shovel()
 signal end_shovel()
 signal dump_shovel(direction)
+signal step()
 
 const SIDE_OFFSET:float = 0.6
+
+
+@export var step_audio:Array[AudioStream] = []
 
 
 var is_shoveling:bool = false
 var is_dumping:bool = false
 var shovel_side:Vector3 = Vector3.LEFT
+var snow_height:float = 0.0
 
 
+@onready var mesh_root:Node3D = %MeshRoot
 @onready var shovel_root:Node3D = %ShovelRoot
 @onready var shovel:Shovel = %Shovel
 @onready var camera:PlayerCamera = $Camera3D
 @onready var controller:PlayerController = $PlayerController
+@onready var audio_player:AudioStreamPlayer = $AudioStreamPlayer
+@onready var animation_player:AnimationPlayer = $AnimationPlayer
 
 
 func _ready() -> void:
@@ -61,6 +69,9 @@ func _physics_process(delta):
 	var horizontal_velocity:Vector3 = Vector3(velocity.x, 0, velocity.z)
 	if horizontal_velocity.length() > 1.0:
 		look_at(global_position - horizontal_velocity)
+		animation_player.speed_scale = horizontal_velocity.length() / PlayerController.WALK_SPEED
+		if not animation_player.is_playing():
+			animation_player.play("Walk")
 	
 	move_and_slide()
 
@@ -104,3 +115,14 @@ func _on_dump_complete() -> void:
 	is_dumping = false
 	is_shoveling = false
 	end_shovel.emit()
+
+
+func _on_animation_player_animation_finished(anim_name):
+	if anim_name == "Walk":
+		if snow_height > 0.2:
+			var rand_pitch: = audio_player.pitch_scale + randf_range(-0.1, 0.1)
+			audio_player.pitch_scale = clamp(rand_pitch, 0.95, 1.05)
+			audio_player.stream = step_audio.pick_random()
+			audio_player.play()
+		
+		step.emit()

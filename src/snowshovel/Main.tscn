@@ -32,7 +32,6 @@ unique_name_in_owner = true
 theme = ExtResource("5_2n45u")
 
 [node name="ColorLimitScreenShader" type="ColorRect" parent="CanvasLayer"]
-visible = false
 material = SubResource("ShaderMaterial_cwn4b")
 anchors_preset = 15
 anchor_right = 1.0
@@ -43,3 +42,4 @@ mouse_filter = 2
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_qimvm")
+autoplay = true
