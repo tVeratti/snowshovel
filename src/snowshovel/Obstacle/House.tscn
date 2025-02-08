@@ -76,7 +76,7 @@ material_override = ExtResource("1_na2lk")
 mesh = SubResource("ArrayMesh_rr5e0")
 
 [node name="Garage" type="MeshInstance3D" parent="House"]
-transform = Transform3D(1, 0, 0, 0, 0.762375, -0.647136, 0, 0.647136, 0.762375, 4.45317, -2.5656, -10.4329)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.45317, -2.5656, -10.1517)
 mesh = SubResource("BoxMesh_4xaii")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="House/Garage"]

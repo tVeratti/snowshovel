@@ -133,7 +133,7 @@ func _check_player_pixel(mask:Image, player_position:Vector2) -> void:
 	var did_exit_snow:bool = not is_on_snow and is_previous_on_snow
 	
 	previous_player_pixel = player_pixel
-	player.snow_height = player_pixel.r
+	
 
 
 ## Check the current height of snow underneath shovel
@@ -164,6 +164,7 @@ func _check_shovel_pixel(mask:Image, shovel_position:Vector2) -> void:
 	elif not player.is_dumping:
 		snow_shovel_mask.hide()
 	
+	player.snow_height = average_shovel_height 
 	player.shovel.next_snow_height = average_shovel_height * distance_moved.length()
 	previous_shovel_position = shovel_position
 

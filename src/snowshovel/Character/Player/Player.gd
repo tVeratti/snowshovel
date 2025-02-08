@@ -9,7 +9,7 @@ signal end_shovel()
 signal dump_shovel(direction)
 signal step()
 
-const SIDE_OFFSET:float = 0.6
+const SIDE_OFFSET:float = 0.7
 
 
 @export var step_audio:Array[AudioStream] = []
@@ -119,7 +119,7 @@ func _on_dump_complete() -> void:
 
 func _on_animation_player_animation_finished(anim_name):
 	if anim_name == "Walk":
-		if snow_height > 0.2:
+		if snow_height >= 0.18:
 			var rand_pitch: = audio_player.pitch_scale + randf_range(-0.1, 0.1)
 			audio_player.pitch_scale = clamp(rand_pitch, 0.95, 1.05)
 			audio_player.stream = step_audio.pick_random()
