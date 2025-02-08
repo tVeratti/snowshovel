@@ -58,9 +58,8 @@ shape = SubResource("CapsuleShape3D_valxt")
 
 [node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("target")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 10)
-projection = 1
 current = true
-size = 13.0
+size = 21.484
 far = 500.0
 script = ExtResource("3_t0d3t")
 target = NodePath("..")

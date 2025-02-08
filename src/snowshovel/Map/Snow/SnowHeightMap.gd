@@ -28,10 +28,11 @@ const DEFAULT_PATH_SNOW:Color = Color(
 var average_shovel_height:float
 var previous_player_pixel:Color
 var previous_shovel_position:Vector2 = Vector2.ZERO
-
-var is_animating_dump:bool = false
 var pre_dump_height:float
 
+var pathways_data:Dictionary = {}
+var current_pathway:Pathway
+var current_pathway_polygon:Polygon2D
 
 
 @onready var shovel_root:Node2D = %ShovelRoot
@@ -54,15 +55,22 @@ func _ready():
 	var initial_position_offset = (size / 2.0)
 	snow_height_mask_offset.position = initial_position_offset
 	
-	player.shovel.dump_started.connect(_on_dump_shovel_started)
-	player.shovel.dump_completed.connect(_on_dump_shovel_completed)
+	# Register all 3D nodes that also mask the snow
+	var snow_mask_image: = _get_mask_image()
+	_register_houses()
+	_register_pathways()
 	
 	reset_mask.self_modulate = DEFAULT_FULL_SNOW
 	reset_mask.show()
 	
-	_register_houses()
-	_register_pathways()
+	# Connect Signals
+	player.shovel.dump_started.connect(_on_dump_shovel_started)
+	player.shovel.dump_completed.connect(_on_dump_shovel_completed)
 	
+	PathwayManager.player_entered_pathway.connect(_on_player_entered_pathway)
+	PathwayManager.player_exited_pathway.connect(_on_player_exited_pathway)
+	
+	# Hide all initial masks after they render out
 	await get_tree().create_timer(1).timeout
 	reset_mask.hide()
 	obstacles_root.hide()
@@ -84,8 +92,11 @@ func _process(_delta):
 	
 	var shovel_position:Vector2 = _translate_position(player.shovel.global_position)
 	_check_shovel_pixel(snow_mask_image, shovel_position)
+	
+	_check_pathway_average_height(snow_mask_image)
 
 
+## Get 2D heightmap position of 3D node
 func _translate_position(position_3D:Vector3) -> Vector2:
 	var position_2D: = Vector2(
 		position_3D.x,
@@ -94,10 +105,21 @@ func _translate_position(position_3D:Vector3) -> Vector2:
 	return position_2D
 
 
+## Get 2D rotation of a 3D node on the Map
 func _translate_rotation(node_3D:Node3D) -> float:
 	return rad_to_deg(Vector2(node_3D.basis.z.x, node_3D.basis.z.z).angle()) + 90
 
 
+#region Check Pixel Heights
+# --------------------------
+
+## Get the texture being passed to the snow for its heightmap
+func _get_mask_image() -> Image:
+	var snow_mask_texture:ViewportTexture = snow_mesh.material_override.get_shader_parameter("snow_mask")
+	return snow_mask_texture.get_image()
+
+
+## Check the current height of snow underneath player
 func _check_player_pixel(mask:Image, player_position:Vector2) -> void:
 	var player_pixel: = mask.get_pixelv(player_position + snow_height_mask_offset.position)
 	
@@ -107,14 +129,10 @@ func _check_player_pixel(mask:Image, player_position:Vector2) -> void:
 	var did_enter_snow:bool = is_on_snow and not is_previous_on_snow
 	var did_exit_snow:bool = not is_on_snow and is_previous_on_snow
 	
-	if did_enter_snow:
-		SnowManager.player_snow_entered.emit()
-	elif did_exit_snow:
-		SnowManager.player_snow_exited.emit()
-	
 	previous_player_pixel = player_pixel
 
 
+## Check the current height of snow underneath shovel
 func _check_shovel_pixel(mask:Image, shovel_position:Vector2) -> void:
 	# Get the average pixel color in front of the shovel.
 	var degrees:float = deg_to_rad(snow_player_mask.rotation_degrees)
@@ -146,11 +164,7 @@ func _check_shovel_pixel(mask:Image, shovel_position:Vector2) -> void:
 	previous_shovel_position = shovel_position
 
 
-func _get_mask_image() -> Image:
-	var snow_mask_texture:ViewportTexture = snow_mesh.material_override.get_shader_parameter("snow_mask")
-	return snow_mask_texture.get_image()
-
-
+## Get the average height of all pixels under a sprite mask
 func _get_average_height(map:Image, mask:Sprite2D, offset:Vector2 = Vector2.ZERO) -> float:
 	var mask_center: = mask.global_position
 	var mask_offset: = offset.rotated(mask.global_rotation)
@@ -169,6 +183,9 @@ func _get_average_height(map:Image, mask:Sprite2D, offset:Vector2 = Vector2.ZERO
 			average_height /= 2.0
 	
 	return average_height
+
+
+#endregion
 
 
 func _on_dump_shovel_started(direction:Vector3) -> void:
@@ -202,6 +219,9 @@ func _on_dump_shovel_completed() -> void:
 	pass
 
 
+#region Houses
+# --------------------------
+
 func _register_houses() -> void:
 	var houses = get_tree().get_nodes_in_group("house")
 	for house in houses:
@@ -215,25 +235,79 @@ func _register_houses() -> void:
 		footprint.rotation_degrees = _translate_rotation(house)
 		obstacles_root.add_child(footprint)
 
+#endregion
+
+
+#region Pathways
+# --------------------------
 
 func _register_pathways() -> void:
+	var map: = _get_mask_image()
+	
 	var pathways = get_tree().get_nodes_in_group("pathway")
 	for pathway in pathways:
 		var csg:CSGPolygon3D = pathway.polygon
-		var position:Vector2 = _translate_position(csg.global_position)# Vector2(.x, csg.global_position.z)
-		
+		var position:Vector2 = _translate_position(csg.global_position)
 		var offset_points:Array = []
 		for point in csg.polygon:
 			var offset_point:Vector2 = point * MAP_SCALE_MULTIPLIER
-			offset_points.append(offset_point)
+			offset_points.append(position + offset_point * Vector2(1, -1))
 		
 		var footprint: = Polygon2D.new()
 		footprint.polygon = PackedVector2Array(offset_points)
 		footprint.color = DEFAULT_PATH_SNOW
-		footprint.position = position
-		footprint.scale.y = -1
 		pathways_root.add_child(footprint)
+		footprint.set_name(pathway.id)
+		
+		call_deferred("_cache_pathways_pixels", map, pathway, footprint)
 
+
+func _check_pathway_average_height(map:Image) -> void:
+	if not is_instance_valid(current_pathway): return
+	
+	var pixel_positions:Array = pathways_data[current_pathway.id]
+	
+	var average_height:float = 0.0
+	var centroid:Vector2 = Vector2.ZERO
+	for point in pixel_positions:
+		var offset_point:Vector2 = (current_pathway_polygon.global_position + point)
+		var pixel = map.get_pixelv(offset_point)
+		average_height += pixel.r
+		average_height /= 2.0
+		centroid += offset_point
+		centroid /= 2
+	
+	printt(average_height)
+
+
+
+func _cache_pathways_pixels(map:Image, pathway:Pathway, pathway_polygon:Polygon2D) -> void:
+	var pathway_position: = pathway.position
+	var mask_size: = pathway.box_2D.size * MAP_SCALE_MULTIPLIER
+	
+	var polygon_transform:Transform2D = pathway_polygon.global_transform
+	var average_height:float = 0
+	
+	pathways_data[pathway.id] = []
+	for y in range(0, mask_size.y):
+		for x in range(0, mask_size.x):
+			var point:Vector2 = Vector2(x, -y) * MAP_SCALE_MULTIPLIER
+			if Geometry2D.is_point_in_polygon(point, pathway_polygon.polygon):
+				pathways_data[pathway.id].append(point)
+
+
+
+func _on_player_entered_pathway(pathway:Pathway) -> void:
+	current_pathway = pathway
+	current_pathway_polygon = pathways_root.get_node(pathway.id)
+
+
+func _on_player_exited_pathway(pathway:Pathway) -> void:
+	current_pathway = null
+	current_pathway_polygon = null
+
+
+#endregion
 
 func _reset_shovel_mask() -> void:
 	snow_shovel_mask.hide()

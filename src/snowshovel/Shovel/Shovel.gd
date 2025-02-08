@@ -26,8 +26,6 @@ var accumulated_percentage:float = 0.0
 
 
 func _ready():
-	SnowManager.shovel_snow_entered.connect(_on_snow_shovel_entered)
-	SnowManager.shovel_snow_exited.connect(_on_snow_shovel_exited)
 	player.dump_shovel.connect(_on_shovel_dumped)
 
 
@@ -46,14 +44,6 @@ func _process(delta):
 		accumulated_percentage = 0.0
 	else:
 		accumulated_percentage = min(1.0, accumulated_snow / max_snow_accumulation)
-
-
-func _on_snow_shovel_entered(height:float) -> void:
-	is_on_snow = true
-
-
-func _on_snow_shovel_exited() -> void:
-	is_on_snow = false
 
 
 func _on_shovel_dumped(direction:Vector3) -> void:

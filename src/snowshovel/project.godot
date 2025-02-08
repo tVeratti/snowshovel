@@ -17,7 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-SnowManager="*res://Map/Snow/SnowManager.gd"
+PathwayManager="*res://Pathways/PathwayManager.gd"
 
 [global_group]
 
