@@ -35,6 +35,7 @@ var current_pathway:Pathway
 var current_pathway_polygon:Polygon2D
 
 
+@onready var height_root:Node2D = %HeightMapRoot
 @onready var shovel_root:Node2D = %ShovelRoot
 @onready var snow_height_mask_offset:Node2D = %SnowHeightMaskOffset
 @onready var snow_shovel_mask:Sprite2D = %SnowShovelMask
@@ -251,15 +252,16 @@ func _register_pathways() -> void:
 		var offset_points:Array = []
 		for point in csg.polygon:
 			var offset_point:Vector2 = point * MAP_SCALE_MULTIPLIER
-			offset_points.append(position + offset_point * Vector2(1, -1))
+			offset_points.append(offset_point * Vector2(1, -1))
 		
 		var footprint: = Polygon2D.new()
 		footprint.polygon = PackedVector2Array(offset_points)
 		footprint.color = DEFAULT_PATH_SNOW
+		footprint.position = position
 		pathways_root.add_child(footprint)
 		footprint.set_name(pathway.id)
 		
-		call_deferred("_cache_pathways_pixels", map, pathway, footprint)
+		call_deferred("_cache_pathways_pixels", pathway, footprint)
 
 
 func _check_pathway_average_height(map:Image) -> void:
@@ -270,31 +272,30 @@ func _check_pathway_average_height(map:Image) -> void:
 	var average_height:float = 0.0
 	var centroid:Vector2 = Vector2.ZERO
 	for point in pixel_positions:
-		var offset_point:Vector2 = (current_pathway_polygon.global_position + point)
+		var offset_point:Vector2 = point
 		var pixel = map.get_pixelv(offset_point)
+		
 		average_height += pixel.r
 		average_height /= 2.0
+		
 		centroid += offset_point
 		centroid /= 2
+
+
+func _cache_pathways_pixels(pathway:Pathway, pathway_polygon:Polygon2D) -> void:
+	var polygon_size: = pathway.box_2D.size
 	
-	printt(average_height)
-
-
-
-func _cache_pathways_pixels(map:Image, pathway:Pathway, pathway_polygon:Polygon2D) -> void:
-	var pathway_position: = pathway.position
-	var mask_size: = pathway.box_2D.size * MAP_SCALE_MULTIPLIER
-	
-	var polygon_transform:Transform2D = pathway_polygon.global_transform
-	var average_height:float = 0
+	var new_image:Image = Image.create_empty(1600, 1600, false, Image.FORMAT_RGBA8)
 	
 	pathways_data[pathway.id] = []
-	for y in range(0, mask_size.y):
-		for x in range(0, mask_size.x):
-			var point:Vector2 = Vector2(x, -y) * MAP_SCALE_MULTIPLIER
-			if Geometry2D.is_point_in_polygon(point, pathway_polygon.polygon):
-				pathways_data[pathway.id].append(point)
-
+	for y in range(-polygon_size.y, polygon_size.y):
+		for x in range(-polygon_size.x, polygon_size.x):
+			
+			var point_local:Vector2 = Vector2(x, -y) * MAP_SCALE_MULTIPLIER
+			var point_global:Vector2 = snow_height_mask_offset.position + pathway_polygon.position + point_local
+			
+			if Geometry2D.is_point_in_polygon(point_local, pathway_polygon.polygon):
+				pathways_data[pathway.id].append(point_global)
 
 
 func _on_player_entered_pathway(pathway:Pathway) -> void:

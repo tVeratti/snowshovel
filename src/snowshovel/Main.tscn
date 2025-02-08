@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://sg4leuqvlxcb"]
+[gd_scene load_steps=9 format=3 uid="uid://sg4leuqvlxcb"]
 
 [ext_resource type="Script" path="res://Main.gd" id="1_hb5ac"]
 [ext_resource type="PackedScene" uid="uid://o7p2surfsx0u" path="res://Character/Player/Player.tscn" id="1_x2dak"]
@@ -6,6 +6,7 @@
 [ext_resource type="Theme" uid="uid://d32w5eyjl3awa" path="res://Common/Assets/ui_theme.tres" id="5_2n45u"]
 [ext_resource type="Shader" path="res://Common/Assets/color_limit.gdshader" id="5_13gbx"]
 [ext_resource type="PackedScene" uid="uid://dmdevl1o02m3" path="res://Menu/MenuInterface.tscn" id="5_uwt88"]
+[ext_resource type="AudioStream" uid="uid://jsekc01v6r1p" path="res://Common/Assets/videogamemusicfebruary.wav" id="7_qimvm"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cwn4b"]
 shader = ExtResource("5_13gbx")
@@ -39,3 +40,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_qimvm")
