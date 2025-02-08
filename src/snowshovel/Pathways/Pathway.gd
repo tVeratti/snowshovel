@@ -6,6 +6,8 @@ class_name Pathway
 const MAX_COORD = pow(2,31)-1
 const MIN_COORD = -MAX_COORD
 
+const TARGET_HEIGHT:float = 0.1
+
 
 @export var polygon:CSGPolygon3D
 
@@ -13,29 +15,48 @@ const MIN_COORD = -MAX_COORD
 var id:String = UUID.v4()
 var player_within:bool = false
 var box_2D:Rect2
-
+var average_height:float = 1.0
 
 @onready var shovel_area:Area3D = %ShovelArea3D
 @onready var shovel_collision:CollisionPolygon3D = %CollisionPolygon3D
+@onready var progress_label:Label3D = %Progress
 
 
 func _ready():
 	polygon.hide()
-	shovel_collision.polygon = polygon.polygon
-	shovel_collision.global_transform = polygon.global_transform
 	set_rect()
+	shovel_collision.polygon = polygon.polygon
+	#var points:Array = []
+	#for p in polygon.polygon:
+		#points.append(p * 1.2)
+	#shovel_collision.polygon = PackedVector2Array(points)
+	#shovel_area.position += Vector3(box_2D.size.x, 0, box_2D.size.y) / 1.2
+
+
+func _process(delta):
+	var progress = (1.0 - average_height) / 1.0
+	progress_label.text = "%s%%" % snapped(progress * 100, 0)
 
 
 func _on_shovel_area_3d_body_entered(body):
 	if body is Player:
 		player_within = true
 		PathwayManager.player_entered_pathway.emit(self)
+		_show_progress(true)
 
 
 func _on_shovel_area_3d_body_exited(body):
 	if body is Player:
 		player_within = false
 		PathwayManager.player_exited_pathway.emit(self)
+		_show_progress(false)
+
+
+func _show_progress(do_show:bool) -> void:
+	var tween: = get_tree().create_tween()
+	tween.set_ease(Tween.EASE_OUT)
+	tween.set_trans(Tween.TRANS_ELASTIC)
+	tween.tween_property(progress_label, "position:y", 3.0 if do_show else -3.0, 2.0)
 
 
 func minv(curvec,newvec):

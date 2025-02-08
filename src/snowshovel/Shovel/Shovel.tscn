@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=4 uid="uid://bsh613laee4iu"]
+[gd_scene load_steps=18 format=4 uid="uid://bsh613laee4iu"]
 
 [ext_resource type="Script" path="res://Shovel/Shovel.gd" id="1_2yjof"]
 [ext_resource type="Material" uid="uid://1goorvrk4pcf" path="res://Common/object_dark_material.tres" id="2_kc1l0"]
@@ -206,7 +206,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(0, 0, 0.180435)]
+"values": [Vector3(0, 0, 0.1)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -218,7 +218,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(-0.698132, 0, 0)]
+"values": [Vector3(-0.523599, 0, 0)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -269,11 +269,40 @@ tracks/5/keys = {
 "values": [Vector3(0.0352798, -0.0394331, 1.56278)]
 }
 
+[sub_resource type="Animation" id="Animation_yp7pv"]
+resource_name = "Shovel"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Shovel:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(-0.00833333, 0, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0.180435), Vector3(0, 0, 0.1), Vector3(0, 0, 0.3)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Shovel:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(-0.00833333, 0, 0.3),
+"transitions": PackedFloat32Array(0.450625, 1, 1),
+"update": 0,
+"values": [Vector3(-0.523599, 0, 0), Vector3(-0.523599, 0.00349066, 0), Vector3(-0.949258, 0.161166, -0.0136117)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_gknrh"]
 _data = {
 "DumpLeft": SubResource("Animation_kx4jb"),
 "DumpRight": SubResource("Animation_3oxu0"),
-"RESET": SubResource("Animation_01hxs")
+"RESET": SubResource("Animation_01hxs"),
+"Shovel": SubResource("Animation_yp7pv")
 }
 
 [node name="Shovel" type="Node3D"]
@@ -283,7 +312,7 @@ shovel_loop_main = Array[AudioStream]([ExtResource("3_wmw8o"), ExtResource("4_yd
 shovel_scoop_audio = Array[AudioStream]([ExtResource("3_mtvmt")])
 
 [node name="Shovel" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.766044, 0.642788, 0, -0.642788, 0.766044, 0, 0, 0.180435)
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0.1)
 material_override = ExtResource("2_kc1l0")
 mesh = SubResource("BoxMesh_lcg6t")
 skeleton = NodePath("../..")
@@ -318,7 +347,6 @@ unique_name_in_owner = true
 one_shot = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-bus = &"Shovel"
 
 [connection signal="timeout" from="DumpTimer" to="." method="_on_dump_timer_timeout"]
 [connection signal="finished" from="AudioStreamPlayer" to="." method="_on_audio_stream_player_finished"]

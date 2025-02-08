@@ -7,7 +7,7 @@ const MAP_SCALE_MULTIPLIER:float = 10.0
 
 
 const DEFAULT_FULL_SNOW_HEIGHT:float = 0.8
-const DEFAULT_PATH_SNOW_HEIGHT:float = 0.4
+const DEFAULT_PATH_SNOW_HEIGHT:float = 1.0
 
 const DEFAULT_FULL_SNOW:Color = Color(
 	DEFAULT_FULL_SNOW_HEIGHT,
@@ -284,6 +284,8 @@ func _check_pathway_average_height(map:Image) -> void:
 		
 		centroid += offset_point
 		centroid /= 2
+	
+	current_pathway.average_height = average_height
 
 
 func _cache_pathways_pixels(pathway:Pathway, pathway_polygon:Polygon2D) -> void:

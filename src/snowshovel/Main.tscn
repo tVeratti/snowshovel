@@ -1,9 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://sg4leuqvlxcb"]
+[gd_scene load_steps=8 format=3 uid="uid://sg4leuqvlxcb"]
 
 [ext_resource type="Script" path="res://Main.gd" id="1_hb5ac"]
 [ext_resource type="PackedScene" uid="uid://o7p2surfsx0u" path="res://Character/Player/Player.tscn" id="1_x2dak"]
 [ext_resource type="PackedScene" uid="uid://cigxkdnca66xs" path="res://Map/Map.tscn" id="3_ghs0a"]
-[ext_resource type="Theme" uid="uid://d32w5eyjl3awa" path="res://Common/Assets/ui_theme.tres" id="5_2n45u"]
 [ext_resource type="Shader" path="res://Common/Assets/color_limit.gdshader" id="5_13gbx"]
 [ext_resource type="PackedScene" uid="uid://dmdevl1o02m3" path="res://Menu/MenuInterface.tscn" id="5_uwt88"]
 [ext_resource type="AudioStream" uid="uid://jsekc01v6r1p" path="res://Common/Assets/videogamemusicfebruary.wav" id="7_qimvm"]
@@ -29,9 +28,9 @@ transform = Transform3D(1, 0, 0, 0, 0.771203, 0.63659, 0, -0.63659, 0.771203, 0,
 
 [node name="MenuInterface" parent="CanvasLayer" instance=ExtResource("5_uwt88")]
 unique_name_in_owner = true
-theme = ExtResource("5_2n45u")
 
 [node name="ColorLimitScreenShader" type="ColorRect" parent="CanvasLayer"]
+visible = false
 material = SubResource("ShaderMaterial_cwn4b")
 anchors_preset = 15
 anchor_right = 1.0

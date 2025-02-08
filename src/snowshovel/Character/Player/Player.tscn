@@ -153,14 +153,6 @@ far = 500.0
 script = ExtResource("3_t0d3t")
 target = NodePath("..")
 
-[node name="ShovelHoldLeft" type="Marker3D" parent="."]
-unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7, 0, 0)
-
-[node name="ShovelHoldRight" type="Marker3D" parent="."]
-unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7, 0, 0)
-
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource("AnimationNodeBlendTree_bjo2w")
 anim_player = NodePath("../AnimationPlayer")

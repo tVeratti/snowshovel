@@ -1,5 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://dmdevl1o02m3"]
+[gd_scene load_steps=8 format=3 uid="uid://dmdevl1o02m3"]
 
+[ext_resource type="Theme" uid="uid://d32w5eyjl3awa" path="res://Common/Assets/ui_theme.tres" id="1_fgknu"]
 [ext_resource type="FontFile" uid="uid://ccyaqwbblu026" path="res://Common/Assets/CherryBombOne-Regular.ttf" id="1_h0uxf"]
 [ext_resource type="FontFile" uid="uid://cc7fsqql0mdwk" path="res://Common/Assets/Ubuntu-Bold.ttf" id="2_43v4c"]
 [ext_resource type="FontFile" uid="uid://co7jiujlvdvww" path="res://Common/Assets/Sansita-Bold.ttf" id="3_u3a2r"]
@@ -15,7 +16,7 @@ shadow_color = Color(0, 0, 0, 1)
 font = ExtResource("2_43v4c")
 font_size = 44
 font_color = Color(0, 0, 0, 1)
-outline_size = 5
+outline_size = 12
 
 [sub_resource type="LabelSettings" id="LabelSettings_xqbbr"]
 font = ExtResource("3_u3a2r")
@@ -29,6 +30,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_fgknu")
 
 [node name="Layout" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -75,12 +77,15 @@ theme_override_constants/margin_bottom = 10
 
 [node name="Buttons" type="VBoxContainer" parent="Layout/MarginContainer"]
 layout_mode = 2
+theme_override_constants/separation = 12
 
 [node name="Play" type="Button" parent="Layout/MarginContainer/Buttons"]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
+theme_override_font_sizes/font_size = 32
 text = "Play"
 
 [node name="Quit" type="Button" parent="Layout/MarginContainer/Buttons"]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "Quit"

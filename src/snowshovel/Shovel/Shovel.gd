@@ -83,10 +83,12 @@ func _on_dump_timer_timeout():
 
 func _on_start_shovel() -> void:
 	_play_shovel_loop(true)
+	animations.play("Shovel")
 
 
 func _on_end_shovel() -> void:
 	_stop_audio_loop()
+	animations.play_backwards("Shovel")
 
 
 func _stop_audio_loop() -> void:
