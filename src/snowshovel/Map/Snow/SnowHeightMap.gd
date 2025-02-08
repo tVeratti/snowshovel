@@ -269,9 +269,16 @@ func _check_pathway_average_height(map:Image) -> void:
 		centroid /= 2
 	
 	#debug_mask.texture = ImageTexture.create_from_image(debug_image)
-	var low_heights_count:int = heights.filter(func(h): return h < 0.2).size()
-	var progress:float = low_heights_count / float(pixel_positions.size())
-	current_pathway.progress = progress
+	var low_heights_count:int = heights.filter(func(h): return h <= 0.2).size()
+	var average_height = heights.reduce(func(total, h):
+		return total + h, 0.0) / pixel_positions.size()
+	
+	var height_progress = 1.2 - average_height
+	var count_progress = low_heights_count / float(pixel_positions.size())
+	var progress:float = max(height_progress, count_progress)
+	
+	current_pathway.progress =  progress
+	
 
 
 func _cache_pathways_pixels(pathway:Pathway, pathway_polygon:Polygon2D) -> void:
@@ -289,6 +296,10 @@ func _cache_pathways_pixels(pathway:Pathway, pathway_polygon:Polygon2D) -> void:
 			
 			if Geometry2D.is_point_in_polygon(point_local, pathway_polygon.polygon):
 				new_image.set_pixelv(point_global, Color.BLACK)
+				new_image.set_pixelv(point_global + Vector2.UP, Color.BLACK)
+				new_image.set_pixelv(point_global + Vector2.DOWN, Color.BLACK)
+				#new_image.set_pixelv(point_global + Vector2(0.5, -0.5), Color.BLACK)
+				#new_image.set_pixelv(point_global + Vector2(-0.5, 0.5), Color.BLACK)
 				pathways_data[pathway.id].append(point_global + Vector2.ONE)
 				
 				#var debug_node = MeshInstance3D.new()

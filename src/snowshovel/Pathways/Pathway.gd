@@ -38,7 +38,7 @@ func _ready():
 
 func _process(delta):
 	if is_instance_valid(player_within):
-		progress_label.text = "%s%%" % snapped(progress * 100, 0)
+		progress_label.text = "%s%%" % min(100.0, snapped(progress * 100, 0))
 		progress_anchor.global_position = lerp(
 			progress_anchor.global_position,
 			player_within.global_position - Vector3(3,0, 3),
