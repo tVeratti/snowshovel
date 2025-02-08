@@ -6,8 +6,8 @@ const SHOVEL_SIDE_OFFSET:float = 14
 const MAP_SCALE_MULTIPLIER:float = 10.0
 
 
-const DEFAULT_FULL_SNOW_HEIGHT:float = 0.8
-const DEFAULT_PATH_SNOW_HEIGHT:float = 1.0
+const DEFAULT_FULL_SNOW_HEIGHT:float = 1.0
+const DEFAULT_PATH_SNOW_HEIGHT:float = 0.8
 
 const DEFAULT_FULL_SNOW:Color = Color(
 	DEFAULT_FULL_SNOW_HEIGHT,
@@ -46,6 +46,7 @@ var current_pathway_polygon:Polygon2D
 @onready var player_root:Node2D = %PlayerRoot
 @onready var snow_player_mask:Sprite2D = %SnowPlayerMask
 @onready var reset_mask:TextureRect = %ResetMask
+@onready var debug_mask:TextureRect = %DebugMask
 @onready var obstacles_root:Node2D = %Obstacles
 @onready var pathways_root:Node2D = %Pathways
 
@@ -63,6 +64,8 @@ func _ready():
 	
 	reset_mask.self_modulate = DEFAULT_FULL_SNOW
 	reset_mask.show()
+	reset_mask.texture = reset_mask.texture.duplicate()
+	reset_mask.texture.resource_local_to_scene = true
 	
 	# Connect Signals
 	player.shovel.dump_started.connect(_on_dump_shovel_started)
@@ -77,25 +80,6 @@ func _ready():
 	reset_mask.hide()
 	obstacles_root.hide()
 	pathways_root.hide()
-
-
-func _process(_delta):
-	var snow_mask_image: = _get_mask_image()
-	
-	var player_position:Vector2 = _translate_position(player.global_position)
-	player_root.position = player_position
-	var player_rotation = _translate_rotation(player)
-	player_root.rotation_degrees = player_rotation
-	_check_player_pixel(snow_mask_image, player_position)
-	
-	var shovel_root_offset:Vector2 = _translate_position(player.shovel_root.position)
-	shovel_root.position = shovel_root_offset
-	shovel_root.position.x *= -1
-	
-	var shovel_position:Vector2 = _translate_position(player.shovel.global_position)
-	_check_shovel_pixel(snow_mask_image, shovel_position)
-	
-	_check_pathway_average_height(snow_mask_image)
 
 
 ## Get 2D heightmap position of 3D node
@@ -272,36 +256,53 @@ func _check_pathway_average_height(map:Image) -> void:
 	if not is_instance_valid(current_pathway): return
 	
 	var pixel_positions:Array = pathways_data[current_pathway.id]
-	
-	var average_height:float = 0.0
+	var debug_image: = Image.create_empty(1600, 1600, false, Image.FORMAT_RGBA8)
 	var centroid:Vector2 = Vector2.ZERO
+	var heights:Array = []
 	for point in pixel_positions:
 		var offset_point:Vector2 = point
 		var pixel = map.get_pixelv(offset_point)
-		
-		average_height += pixel.r
-		average_height /= 2.0
+		#debug_image.set_pixelv(offset_point, Color.BLUE)
+		heights.append(pixel.r)
 		
 		centroid += offset_point
 		centroid /= 2
 	
-	current_pathway.average_height = average_height
+	#debug_mask.texture = ImageTexture.create_from_image(debug_image)
+	var low_heights_count:int = heights.filter(func(h): return h < 0.2).size()
+	var progress:float = low_heights_count / float(pixel_positions.size())
+	current_pathway.progress = progress
 
 
 func _cache_pathways_pixels(pathway:Pathway, pathway_polygon:Polygon2D) -> void:
 	var polygon_size: = pathway.box_2D.size
 	
 	var new_image:Image = Image.create_empty(1600, 1600, false, Image.FORMAT_RGBA8)
+	var map_3D = get_parent()
 	
 	pathways_data[pathway.id] = []
 	for y in range(-polygon_size.y, polygon_size.y):
 		for x in range(-polygon_size.x, polygon_size.x):
 			
 			var point_local:Vector2 = Vector2(x, -y) * MAP_SCALE_MULTIPLIER
-			var point_global:Vector2 = snow_height_mask_offset.position + pathway_polygon.position + point_local
+			var point_global:Vector2 = pathway_polygon.global_position + point_local
 			
 			if Geometry2D.is_point_in_polygon(point_local, pathway_polygon.polygon):
-				pathways_data[pathway.id].append(point_global)
+				new_image.set_pixelv(point_global, Color.BLACK)
+				pathways_data[pathway.id].append(point_global + Vector2.ONE)
+				
+				#var debug_node = MeshInstance3D.new()
+				#debug_node.mesh = SphereMesh.new()
+				#map_3D.add_child(debug_node)
+				#debug_node.global_position = Vector3(point_global.x, 10, point_global.y) / 10.0
+				#
+			#else:
+				#new_image.set_pixelv(point_global, Color.RED)
+	
+	var debug_image: = Sprite2D.new()
+	debug_image.texture = ImageTexture.create_from_image(new_image)
+	debug_image.centered = false
+	height_root.add_child(debug_image)
 
 
 func _on_player_entered_pathway(pathway:Pathway) -> void:
@@ -335,3 +336,22 @@ func _reset_shovel_mask() -> void:
 	dump_receive_area.modulate.a = 0
 	dump_receive_area.position.x = 0
 	
+
+
+func _on_check_timer_timeout():
+	var snow_mask_image: = _get_mask_image()
+	
+	var player_position:Vector2 = _translate_position(player.global_position)
+	player_root.position = player_position
+	var player_rotation = _translate_rotation(player)
+	player_root.rotation_degrees = player_rotation
+	_check_player_pixel(snow_mask_image, player_position)
+	
+	var shovel_root_offset:Vector2 = _translate_position(player.shovel_root.position)
+	shovel_root.position = shovel_root_offset
+	shovel_root.position.x *= -1
+	
+	var shovel_position:Vector2 = _translate_position(player.shovel.global_position)
+	_check_shovel_pixel(snow_mask_image, shovel_position)
+	
+	_check_pathway_average_height(snow_mask_image)

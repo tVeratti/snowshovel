@@ -7,7 +7,7 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_l3pu4"]
 font = ExtResource("1_h0uxf")
-font_size = 200
+font_size = 140
 font_color = Color(0, 0, 0, 1)
 outline_size = 10
 shadow_color = Color(0, 0, 0, 1)
@@ -50,10 +50,10 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="Layout/TitleContainer/Control"]
 layout_mode = 0
-offset_left = 39.0
-offset_top = 111.0
-offset_right = 134.0
-offset_bottom = 162.0
+offset_left = 194.0
+offset_top = 72.0
+offset_right = 289.0
+offset_bottom = 123.0
 rotation = -0.431846
 text = "1BIT"
 label_settings = SubResource("LabelSettings_f7l5i")
@@ -80,7 +80,7 @@ layout_mode = 2
 theme_override_constants/separation = 12
 
 [node name="Play" type="Button" parent="Layout/MarginContainer/Buttons"]
-custom_minimum_size = Vector2(0, 80)
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Play"

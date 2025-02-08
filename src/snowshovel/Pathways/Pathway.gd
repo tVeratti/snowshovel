@@ -13,19 +13,22 @@ const TARGET_HEIGHT:float = 0.1
 
 
 var id:String = UUID.v4()
-var player_within:bool = false
+var is_player_within:bool = false
+var player_within:Player
 var box_2D:Rect2
-var average_height:float = 1.0
+var progress:float = 1.0
 
 @onready var shovel_area:Area3D = %ShovelArea3D
 @onready var shovel_collision:CollisionPolygon3D = %CollisionPolygon3D
 @onready var progress_label:Label3D = %Progress
+@onready var progress_anchor:Node3D = %ProgressAnchor
 
 
 func _ready():
 	polygon.hide()
 	set_rect()
 	shovel_collision.polygon = polygon.polygon
+	progress_anchor.top_level = true
 	#var points:Array = []
 	#for p in polygon.polygon:
 		#points.append(p * 1.2)
@@ -34,20 +37,26 @@ func _ready():
 
 
 func _process(delta):
-	var progress = (1.0 - average_height) / 1.0
-	progress_label.text = "%s%%" % snapped(progress * 100, 0)
+	if is_instance_valid(player_within):
+		progress_label.text = "%s%%" % snapped(progress * 100, 0)
+		progress_anchor.global_position = lerp(
+			progress_anchor.global_position,
+			player_within.global_position - Vector3(3,0, 3),
+			2 * delta)
 
 
 func _on_shovel_area_3d_body_entered(body):
 	if body is Player:
-		player_within = true
+		player_within = body
+		is_player_within = true
 		PathwayManager.player_entered_pathway.emit(self)
 		_show_progress(true)
 
 
 func _on_shovel_area_3d_body_exited(body):
 	if body is Player:
-		player_within = false
+		is_player_within = false
+		player_within = null
 		PathwayManager.player_exited_pathway.emit(self)
 		_show_progress(false)
 
@@ -74,3 +83,7 @@ func set_rect():
 		min_vec = minv(min_vec,v)
 		max_vec = maxv(max_vec,v)
 	box_2D = Rect2(min_vec,max_vec-min_vec)
+
+
+func _on_check_timer_timeout():
+	pass # Replace with function body.

@@ -6,7 +6,7 @@ uniform vec2 mask_scale = vec2(1, 1);
 
 void vertex() {
 	float snow_value = texture(snow_mask, (UV * mask_scale) + mask_offset).r;
-	VERTEX.y = snow_value;
+	VERTEX.y = snow_value * VERTEX.y;
 }
 
 void fragment() {
